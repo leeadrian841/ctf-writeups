@@ -1,0 +1,19 @@
+# VPN configs and secrets
+*.ovpn
+*.key
+*.pem
+.env
+
+# Large or sensitive artefacts
+*.pcap
+*.pcapng
+*.zip
+*.7z
+*.exe
+*.elf
+rockyou.txt
+wordlists/
+
+# OS junk
+.DS_Store
+Thumbs.db
