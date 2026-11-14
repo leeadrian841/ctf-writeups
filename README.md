@@ -33,7 +33,7 @@ Every writeup follows the same analyst-report format:
 6. **Mitigation.** How a defender closes it.
 7. **Lessons learned.** What I'd do faster next time.
 
-Template: [WRITEUP_TEMPLATE.md](WRITEUP_TEMPLATE.md)
+Template: [ctf-writeup-template.md](ctf-writeup-template.md)
 
 ---
 
