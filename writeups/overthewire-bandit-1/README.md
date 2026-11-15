@@ -1,27 +1,27 @@
-# {Challenge name} ({Linux}, {points} pts): {Event name} {year}
+# OverTheWire (Linux): Bandit Level 1 (2026)
 
 | Field      | Value |
 |------------|-------|
 | Platform   | OverTheWire |
-| Event      | {Event name and edition}, {date range} |
-| Date       | {YYYY-MM-DD} |
+| Event      | Bandit |
+| Date       | 2026 |
 | Category   | linux |
-| Difficulty | {Easy / Medium / Hard / Insane} |
-| Points     | {final points} ({static / dynamic}) |
-| Solves     | {number, if published} |
-| Author     | {challenge author, if credited} |
-| Solved by  | {your handle} ({team name}) |
-| Status     | {Solved during event / Upsolved after event} |
-| Tags       | {techniques, separated by commas} |
+| Difficulty | Easy |
+| Points     | N/A |
+| Solves     | 0 |
+| Author     | OverTheWire |
+| Solved by  | leeadrian841 |
+| Status     | Solved |
+| Tags       | linux |
 
 ## TL;DR
-{One or two sentences: the bug class or trick, and the key insight.}
+The password for the next level is stored in a file called - located in the home directory.
 
 ## Challenge
-> {Paste the challenge description exactly as given.}
+> Find the password for the next level is stored in a file called `-` located in the home directory
 
-- Files: `{filename}` (sha256: `{hash}`)
-- Service: `{chal.example.lab:port}` (event infrastructure, now offline)
+- Files: `-` (sha256: `{hash}`)
+- Service: `bandit1@bandit.labs.overthewire.org:2220` (online)
 
 ## First look
 {What you checked first and why. Paste key output as text, trimmed.}
