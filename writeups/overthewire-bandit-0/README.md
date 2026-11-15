@@ -1,27 +1,27 @@
-# {Challenge name} ({Category}, {points} pts): {Event name} {year}
+# OverTheWire (Linux): Bandit 2026
 
 | Field      | Value |
 |------------|-------|
 | Platform   | OverTheWire |
 | Event      | Bandit |
-| Date       | {YYYY-MM-DD} |
+| Date       | 2026 |
 | Category   | linux |
-| Difficulty | {Easy / Medium / Hard / Insane} |
+| Difficulty | Easy |
 | Points     | N/A |
 | Solves     | 0 |
 | Author     | OverTheWire |
-| Solved by  | {your handle} ({team name}) |
+| Solved by  | leeadrian841 |
 | Status     | Solved |
-| Tags       | {techniques, separated by commas} |
+| Tags       | linux |
 
 ## TL;DR
-{One or two sentences: the bug class or trick, and the key insight.}
+The password for the next level is stored in a file called readme located in the home directory. Use this password to log into bandit1 using SSH. Whenever you find a password for a level, use SSH (on port 2220) to log into that level and continue the game.
 
 ## Challenge
-> The password for the next level is stored in a file called readme located in the home directory. Use this password to log into bandit1 using SSH. Whenever you find a password for a level, use SSH (on port 2220) to log into that level and continue the game.
+> Find the password stored in a file called `readme` located in the home directory
 
-- Files: `{filename}` (sha256: `{hash}`)
-- Service: `{chal.example.lab:port}` (event infrastructure, now offline)
+- Files: `readme` (sha256: `{hash}`)
+- Service: `bandit0@bandit.labs.overthewire.org:2220` (online)
 
 ## First look
 {What you checked first and why. Paste key output as text, trimmed.}
@@ -50,7 +50,7 @@
 ![{Describe what the screenshot shows}](img/{file}.png)
 
 ## Flag
-`CTF7{...}`  {or: "Omitted at the organizer's request."}
+`Password for Level 1`
 
 ## Lessons learned
 - {What you'd check first next time}
