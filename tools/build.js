@@ -19,7 +19,15 @@ for (const name of fs.readdirSync(root)) {
 
 const site = JSON.parse(fs.readFileSync(path.join(root, "data/site.json"), "utf8"));
 const writeups = JSON.parse(fs.readFileSync(path.join(root, "data/writeups.json"), "utf8"));
-const template = fs.readFileSync(path.join(root, "writeup.html"), "utf8");
+
+// Stamp CSS and JS links with the commit id, so browsers never mix old cached scripts with new pages.
+const version = (process.env.GITHUB_SHA || String(Date.now())).slice(0, 10);
+const stamp = (html) => html.replace(/((?:href|src)="assets\/[^"?]+\.(?:css|js))"/g, `$1?v=${version}"`);
+
+const template = stamp(fs.readFileSync(path.join(root, "writeup.html"), "utf8"));
+for (const page of ["index.html", "writeup.html"]) {
+  fs.writeFileSync(path.join(out, page), stamp(fs.readFileSync(path.join(root, page), "utf8")));
+}
 
 const seen = new Set();
 for (const w of writeups) {
@@ -47,4 +55,31 @@ for (const w of writeups) {
   fs.writeFileSync(path.join(out, `${slug}.html`), template.replace(/<title>.*?<\/title>/, () => head));
   console.log(`/${slug}`);
 }
+
+// 404 page. A writeup URL typed with a trailing slash is sent to the right page.
+const base = process.env.GITHUB_REPOSITORY ? `/${process.env.GITHUB_REPOSITORY.split("/")[1]}/` : "/";
+fs.writeFileSync(
+  path.join(out, "404.html"),
+  `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Not found | ${esc(site.title)}</title>
+  <script>
+    var slugs = ${JSON.stringify([...seen])};
+    var name = location.pathname.slice(${JSON.stringify(base)}.length).replace(/\\/+$/, "").replace(/\\.html$/, "");
+    if (slugs.indexOf(name) !== -1) location.replace(${JSON.stringify(base)} + name + location.hash);
+  </script>
+  <link rel="stylesheet" href="${base}assets/css/style.css?v=${version}">
+</head>
+<body>
+  <main class="wrap">
+    <p class="notice">404: page not found.<br><a href="${base}">Back to all writeups</a></p>
+  </main>
+</body>
+</html>
+`
+);
+
 console.log(`Built ${seen.size} writeup page(s) into _site/`);
