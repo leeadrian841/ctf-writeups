@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,66 +9,81 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css">
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-  <a class="skip" href="#grid">Skip to writeups</a>
+  <a class="visually-hidden-focusable" href="#grid">Skip to writeups</a>
 
-  <header class="site-header">
-    <div class="wrap">
+  <header class="site-header pt-4 pb-3">
+    <div class="container-xxl">
       <a class="brand" href="./"><span class="prompt">~/</span><span data-brand>ctf-writeups</span><span class="cursor" aria-hidden="true"></span></a>
-      <p class="intro" id="intro"></p>
-      <nav class="intro-links" id="intro-links" aria-label="Author links"></nav>
+      <p class="intro mt-3 mb-2" id="intro"></p>
+      <nav class="intro-links d-flex flex-wrap gap-3" id="intro-links" aria-label="Author links"></nav>
     </div>
   </header>
 
-  <div class="toolbar">
-    <div class="wrap">
-      <div class="toolbar-row">
-        <label class="search">
+  <!-- Search, filters and sort -->
+  <div class="toolbar sticky-top">
+    <div class="container-xxl">
+      <div class="d-flex align-items-center gap-2">
+        <label class="search d-flex align-items-center gap-3 flex-grow-1 m-0">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
           <input id="q" type="search" placeholder="Search titles, techniques, platforms" autocomplete="off" aria-label="Search writeups">
         </label>
 
-        <button class="tool-btn" id="filters-btn" type="button" aria-expanded="false" aria-controls="filters">
-          <span class="label">Filters</span>
-          <span class="count" id="filter-count" hidden></span>
+        <button class="btn btn-tool collapsed d-inline-flex align-items-center gap-2" id="filters-btn" type="button" data-bs-toggle="collapse" data-bs-target="#filters" aria-expanded="false" aria-controls="filters" aria-label="Filters">
+          <svg class="d-sm-none" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16"/><path d="M7 12h10"/><path d="M10 18h4"/></svg>
+          <span class="d-none d-sm-inline">Filters</span>
+          <span class="count d-none" id="filter-count"></span>
           <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
         </button>
 
-        <div class="sort">
-          <button class="tool-btn" id="sort-btn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="sort-menu" aria-label="Sort writeups">
+        <div class="dropdown">
+          <button class="btn btn-tool d-inline-flex align-items-center gap-2" id="sort-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Sort writeups">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4v16"/><path d="m3 16 4 4 4-4"/><path d="M13 6h8"/><path d="M13 12h6"/><path d="M13 18h3"/></svg>
-            <span class="label" id="sort-label">Newest</span>
+            <span class="d-none d-sm-inline" id="sort-label">Newest</span>
           </button>
-          <ul class="sort-menu" id="sort-menu" role="menu" hidden></ul>
+          <ul class="dropdown-menu dropdown-menu-end shadow" id="sort-menu"></ul>
         </div>
       </div>
 
-      <section class="filters" id="filters" aria-label="Filters" hidden>
-        <div class="filters-head">
-          <fieldset class="match">
-            <legend class="skip">Technique matching</legend>
-            <span>Match techniques</span>
-            <label><input type="radio" name="match" value="all" checked> All</label>
-            <label><input type="radio" name="match" value="any"> Any</label>
-          </fieldset>
-          <button class="clear-btn" id="clear" type="button">Clear filters ✕</button>
+      <section class="collapse" id="filters" aria-label="Filters">
+        <div class="pt-1 pb-3">
+          <div class="filters-head d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
+            <fieldset class="d-flex flex-wrap align-items-center gap-3 m-0">
+              <legend class="visually-hidden">Technique matching</legend>
+              <span>Match techniques</span>
+              <div class="form-check form-check-inline m-0">
+                <input class="form-check-input" type="radio" name="match" id="match-all" value="all" checked>
+                <label class="form-check-label" for="match-all">All</label>
+              </div>
+              <div class="form-check form-check-inline m-0">
+                <input class="form-check-input" type="radio" name="match" id="match-any" value="any">
+                <label class="form-check-label" for="match-any">Any</label>
+              </div>
+            </fieldset>
+            <button class="btn btn-sm btn-clear rounded-pill px-3" id="clear" type="button">Clear filters ✕</button>
+          </div>
+          <div class="filter-scroll">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4" id="filter-groups"></div>
+          </div>
         </div>
-        <div class="filter-groups" id="filter-groups"></div>
       </section>
     </div>
   </div>
 
-  <main class="wrap">
-    <p class="results-meta" id="results-meta" aria-live="polite"></p>
-    <div class="grid" id="grid"></div>
+  <main class="container-xxl pt-4">
+    <p class="visually-hidden" id="results-meta" aria-live="polite"></p>
+    <!-- Tiles per row: 1 on phones, 2 from tablets, 3 on wide screens. Change the row-cols-* classes to adjust. -->
+    <div class="row row-cols-1 row-cols-md-2 row-cols-xxl-3 g-3 g-lg-4" id="grid"></div>
   </main>
 
-  <footer class="site-footer">
-    <div class="wrap" data-footer></div>
+  <footer class="site-footer fixed-bottom py-2">
+    <div class="container-xxl text-center" data-footer></div>
   </footer>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
   <script src="assets/js/common.js"></script>
   <script src="assets/js/home.js"></script>
 </body>

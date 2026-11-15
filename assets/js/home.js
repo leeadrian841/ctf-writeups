@@ -8,7 +8,7 @@
   try {
     data = await CTF.load();
   } catch (err) {
-    grid.innerHTML = `<p class="empty">${esc(err.message)}<br>Serve the site over HTTP (GitHub Pages or a local server), not from file://.</p>`;
+    grid.innerHTML = `<div class="w-100"><p class="empty m-0">${esc(err.message)}<br>Serve the site over HTTP (GitHub Pages or a local server), not from file://.</p></div>`;
     return;
   }
   const { site, categories, writeups } = data;
@@ -93,19 +93,21 @@
     const diff = w.difficulty ? `<span class="diff" style="--d:${esc(w.diff?.color || "")}">${esc(w.difficulty)}</span>` : "";
     const pts = w.points ? ` · ${esc(w.points)} pts` : "";
     return `
-      <a class="card reveal" href="${w.url}" style="--cat:${esc(w.cat.color)}">
-        <div class="card-top">
-          <h2>${esc(w.title)}</h2>
-          <span class="badge">${esc(w.cat.name)}</span>
-        </div>
-        <div class="card-meta">${meta}</div>
-        <div class="card-meta">${diff}${pts}${w.sample ? ' <span class="sample-note">sample</span>' : ""}</div>
-        ${w.summary ? `<p class="card-summary">${esc(w.summary)}</p>` : ""}
-        <div class="chips">
-          ${shown.map((t) => `<span class="chip">${esc(t)}</span>`).join("")}
-          ${extra > 0 ? `<span class="chip more">+${extra}</span>` : ""}
-        </div>
-      </a>`;
+      <div class="col">
+        <a class="tile reveal h-100 d-flex flex-column gap-2 p-3 px-sm-4 text-decoration-none" href="${w.url}" style="--cat:${esc(w.cat.color)}">
+          <div class="d-flex align-items-start justify-content-between gap-3">
+            <h2 class="tile-title m-0">${esc(w.title)}</h2>
+            <span class="cat-badge">${esc(w.cat.name)}</span>
+          </div>
+          <div class="tile-meta">${meta}</div>
+          <div class="tile-meta">${diff}${pts}${w.sample ? ' <span class="sample-note">sample</span>' : ""}</div>
+          ${w.summary ? `<p class="tile-summary m-0 flex-grow-1">${esc(w.summary)}</p>` : ""}
+          <div class="d-flex flex-wrap gap-2">
+            ${shown.map((t) => `<span class="chip">${esc(t)}</span>`).join("")}
+            ${extra > 0 ? `<span class="chip more">+${extra}</span>` : ""}
+          </div>
+        </a>
+      </div>`;
   };
 
   const observer =
@@ -118,13 +120,12 @@
 
   const renderGrid = () => {
     const list = writeups.filter(matches).sort(SORTS[state.sort].fn);
-    const total = writeups.length;
-    $("results-meta").textContent =
-      list.length === total ? `${total} writeup${total === 1 ? "" : "s"}` : `${list.length} of ${total} writeups`;
+    // Announced to screen readers only. Nothing is shown on the page.
+    $("results-meta").textContent = `${list.length} writeup${list.length === 1 ? "" : "s"} shown`;
 
     grid.innerHTML = list.length
       ? list.map(card).join("")
-      : `<p class="empty">No writeups match these filters.</p>`;
+      : `<div class="w-100"><p class="empty m-0">No writeups match these filters.</p></div>`;
 
     grid.querySelectorAll(".reveal").forEach((el) => (observer ? observer.observe(el) : el.classList.add("in")));
   };
@@ -163,13 +164,13 @@
         .join("");
       const more = items.length > CHIP_LIMIT ? `<button class="chip more" type="button" data-expand="${g.key}">${showAll ? "Show fewer" : `Show all ${items.length}`}</button>` : "";
 
-      return `<div class="filter-group"><h3>${g.label} <span>${items.length}</span></h3><div class="chips">${chips}${more}</div></div>`;
+      return `<div class="col"><h3 class="filter-title d-flex justify-content-between">${g.label} <span>${items.length}</span></h3><div class="d-flex flex-wrap gap-2">${chips}${more}</div></div>`;
     }).join("");
 
     $("filter-groups").innerHTML = html;
 
     const n = GROUPS.reduce((sum, g) => sum + state.sel[g.key].size, 0);
-    $("filter-count").hidden = !n;
+    $("filter-count").classList.toggle("d-none", !n);
     $("filter-count").textContent = n;
     document.querySelectorAll('input[name="match"]').forEach((r) => (r.checked = r.value === state.match));
   };
@@ -177,7 +178,7 @@
   const renderSort = () => {
     $("sort-label").textContent = SORTS[state.sort].label;
     $("sort-menu").innerHTML = Object.entries(SORTS)
-      .map(([k, s]) => `<li role="none"><button type="button" role="menuitemradio" aria-checked="${k === state.sort}" data-sort="${k}">${s.label}</button></li>`)
+      .map(([k, s]) => `<li><button class="dropdown-item${k === state.sort ? " active" : ""}" type="button" data-sort="${k}"${k === state.sort ? ' aria-current="true"' : ""}>${s.label}</button></li>`)
       .join("");
   };
 
@@ -194,13 +195,6 @@
     state.q = e.target.value.trim();
     writeHash();
     renderGrid();
-  });
-
-  const filtersBtn = $("filters-btn");
-  filtersBtn.addEventListener("click", () => {
-    const open = filtersBtn.getAttribute("aria-expanded") !== "true";
-    filtersBtn.setAttribute("aria-expanded", open);
-    $("filters").hidden = !open;
   });
 
   $("filter-groups").addEventListener("click", (e) => {
@@ -232,25 +226,12 @@
     update();
   });
 
-  const sortBtn = $("sort-btn");
-  const sortMenu = $("sort-menu");
-  const setSortOpen = (open) => {
-    sortBtn.setAttribute("aria-expanded", open);
-    sortMenu.hidden = !open;
-  };
-  sortBtn.addEventListener("click", (e) => {
-    e.stopPropagation();
-    setSortOpen(sortMenu.hidden);
-  });
-  sortMenu.addEventListener("click", (e) => {
+  $("sort-menu").addEventListener("click", (e) => {
     const b = e.target.closest("[data-sort]");
     if (!b) return;
     state.sort = b.dataset.sort;
-    setSortOpen(false);
     update();
   });
-  document.addEventListener("click", (e) => !e.target.closest(".sort") && setSortOpen(false));
-  document.addEventListener("keydown", (e) => e.key === "Escape" && setSortOpen(false));
 
   window.addEventListener("hashchange", () => {
     readHash();
@@ -265,8 +246,10 @@
   readHash();
   $("q").value = state.q;
   if (GROUPS.some((g) => state.sel[g.key].size)) {
-    filtersBtn.setAttribute("aria-expanded", "true");
-    $("filters").hidden = false;
+    // Arriving with filters in the URL: open the panel straight away.
+    $("filters-btn").setAttribute("aria-expanded", "true");
+    $("filters-btn").classList.remove("collapsed");
+    $("filters").classList.add("show");
   }
   renderFilters();
   renderSort();

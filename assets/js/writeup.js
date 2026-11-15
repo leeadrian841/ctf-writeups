@@ -3,7 +3,7 @@
   const { esc, fmtDate } = CTF;
   const $ = (id) => document.getElementById(id);
   const content = $("content");
-  const fail = (msg) => (content.innerHTML = `<p class="notice">${esc(msg)}<br><a href="./">Back to all writeups</a></p>`);
+  const fail = (msg) => (content.innerHTML = `<p class="notice my-5">${esc(msg)}<br><a href="./">Back to all writeups</a></p>`);
 
   let data;
   try {
@@ -33,10 +33,10 @@
 
   $("head").innerHTML = `
     <header class="w-head" style="--cat:${esc(w.cat.color)}">
-      <a class="badge" href="./#cat=${encodeURIComponent(w.cat.id)}" style="text-decoration:none">${esc(w.cat.name)}</a>
+      <a class="cat-badge text-decoration-none" href="./#cat=${encodeURIComponent(w.cat.id)}">${esc(w.cat.name)}</a>
       <h1>${esc(w.title)}</h1>
-      <ul class="w-meta">${meta.map(([k, v]) => `<li>${k}: <b>${esc(v)}</b></li>`).join("")}</ul>
-      <div class="chips">${w.tags.map((t) => `<a class="chip" href="./#tag=${encodeURIComponent(t)}" style="text-decoration:none">${esc(t)}</a>`).join("")}</div>
+      <ul class="w-meta list-unstyled d-flex flex-wrap column-gap-4 row-gap-1 mb-3">${meta.map(([k, v]) => `<li>${k}: <b>${esc(v)}</b></li>`).join("")}</ul>
+      <div class="d-flex flex-wrap gap-2">${w.tags.map((t) => `<a class="chip text-decoration-none" href="./#tag=${encodeURIComponent(t)}">${esc(t)}</a>`).join("")}</div>
     </header>`;
 
   // ---------- Markdown ----------
@@ -117,7 +117,7 @@
   });
 
   if (heads.length > 1) {
-    $("toc").innerHTML = `<h2>On this page</h2><ol>${heads
+    $("toc").innerHTML = `<h2>On this page</h2><ol class="list-unstyled m-0">${heads
       .map((h) => `<li class="lvl${h.tagName[1]}"><a href="#${h.id}">${esc(h.textContent)}</a></li>`)
       .join("")}</ol>`;
 
@@ -142,6 +142,6 @@
   const ordered = [...data.writeups].sort((a, b) => (b.date || "").localeCompare(a.date || ""));
   const i = ordered.indexOf(w);
   const link = (x, cls, label) =>
-    x ? `<a class="${cls}" href="${x.url}"><small>${label}</small>${esc(x.title)}</a>` : "";
-  $("w-nav").innerHTML = link(ordered[i - 1], "prev", "← Newer") + link(ordered[i + 1], "next", "Older →");
+    `<div class="col ${cls}">${x ? `<a class="d-block h-100 p-3 text-decoration-none" href="${x.url}"><small class="d-block mb-1">${label}</small>${esc(x.title)}</a>` : ""}</div>`;
+  $("w-nav").innerHTML = link(ordered[i - 1], "", "← Newer") + link(ordered[i + 1], "text-sm-end", "Older →");
 })();

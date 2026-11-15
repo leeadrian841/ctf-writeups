@@ -51,7 +51,7 @@ const CTF = (() => {
   // Floating "Back to top" button, shown once the page is scrolled.
   const toTop = document.createElement("button");
   toTop.type = "button";
-  toTop.className = "to-top";
+  toTop.className = "to-top btn rounded-pill";
   toTop.innerHTML = '<span aria-hidden="true">↑</span> Back to top';
   toTop.addEventListener("click", () => window.scrollTo({ top: 0 }));
   document.body.appendChild(toTop);

@@ -73,6 +73,10 @@ Add an object to [data/categories.json](data/categories.json). It appears in the
 { "id": "cloud", "name": "Cloud", "color": "#38bdf8", "description": "AWS, Azure and GCP misconfigurations." }
 ```
 
+**Adjust the layout**
+
+The pages use [Bootstrap 5.3](https://getbootstrap.com/docs/5.3/) for layout and responsive behaviour, so most adjustments are class changes in `index.html` and `writeup.html`. For example, tiles per row are set by `row-cols-1 row-cols-md-2 row-cols-xxl-3` on the grid. Colours, fonts and the base text size are variables at the top of [assets/css/style.css](assets/css/style.css).
+
 **Other settings**
 
 Site title, intro text, header links and difficulty levels live in [data/site.json](data/site.json).

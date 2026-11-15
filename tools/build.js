@@ -61,7 +61,7 @@ const base = process.env.GITHUB_REPOSITORY ? `/${process.env.GITHUB_REPOSITORY.s
 fs.writeFileSync(
   path.join(out, "404.html"),
   `<!doctype html>
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -71,11 +71,12 @@ fs.writeFileSync(
     var name = location.pathname.slice(${JSON.stringify(base)}.length).replace(/\\/+$/, "").replace(/\\.html$/, "");
     if (slugs.indexOf(name) !== -1) location.replace(${JSON.stringify(base)} + name + location.hash);
   </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css">
   <link rel="stylesheet" href="${base}assets/css/style.css?v=${version}">
 </head>
 <body>
-  <main class="wrap">
-    <p class="notice">404: page not found.<br><a href="${base}">Back to all writeups</a></p>
+  <main class="container-xxl">
+    <p class="notice my-5">404: page not found.<br><a href="${base}">Back to all writeups</a></p>
   </main>
 </body>
 </html>
