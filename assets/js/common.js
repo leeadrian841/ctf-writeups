@@ -48,5 +48,16 @@ const CTF = (() => {
     if (foot) foot.textContent = `© ${new Date().getFullYear()} ${site.author} · Writeups licensed CC BY 4.0 · Retired machines and completed events only`;
   };
 
+  // Floating "Back to top" button, shown once the page is scrolled.
+  const toTop = document.createElement("button");
+  toTop.type = "button";
+  toTop.className = "to-top";
+  toTop.innerHTML = '<span aria-hidden="true">↑</span> Back to top';
+  toTop.addEventListener("click", () => window.scrollTo({ top: 0 }));
+  document.body.appendChild(toTop);
+  const onScroll = () => toTop.classList.toggle("show", window.scrollY > 150);
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
   return { esc, load, fmtDate, header };
 })();
