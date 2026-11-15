@@ -27,3 +27,6 @@ id_ed25519*
 .npmrc
 .netrc
 .claude/
+
+# Build output
+_site/

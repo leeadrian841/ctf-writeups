@@ -13,7 +13,9 @@
   }
   CTF.header(data.site);
 
-  const slug = new URLSearchParams(location.search).get("w");
+  // /ctf-writeups/<folder-name> opens that writeup. writeup.html?w=<folder-name> still works as a fallback.
+  const last = decodeURIComponent(location.pathname.replace(/\/+$/, "").split("/").pop()).replace(/\.html$/, "");
+  const slug = new URLSearchParams(location.search).get("w") || (last === "writeup" ? "" : last);
   const w = data.writeups.find((x) => x.slug === slug);
   if (!w) return fail("Writeup not found.");
 
@@ -140,6 +142,6 @@
   const ordered = [...data.writeups].sort((a, b) => (b.date || "").localeCompare(a.date || ""));
   const i = ordered.indexOf(w);
   const link = (x, cls, label) =>
-    x ? `<a class="${cls}" href="writeup.html?w=${encodeURIComponent(x.slug)}"><small>${label}</small>${esc(x.title)}</a>` : "";
+    x ? `<a class="${cls}" href="${x.url}"><small>${label}</small>${esc(x.title)}</a>` : "";
   $("w-nav").innerHTML = link(ordered[i - 1], "prev", "← Newer") + link(ordered[i + 1], "next", "Older →");
 })();

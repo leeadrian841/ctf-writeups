@@ -43,12 +43,11 @@ This repo is also a static site (no build step) meant for GitHub Pages. The home
 
 **Add a writeup**
 
-1. Copy [ctf-writeup-template.md](ctf-writeup-template.md) to `writeups/<slug>/README.md` and fill it in. Images go in `writeups/<slug>/img/`.
+1. Copy [ctf-writeup-template.md](ctf-writeup-template.md) to `writeups/<folder-name>/README.md` and fill it in. Images go in `writeups/<folder-name>/img/`.
 2. Add an entry to [data/writeups.json](data/writeups.json):
 
 ```json
 {
-  "slug": "my-challenge",
   "title": "My Challenge",
   "category": "linux",
   "platform": "TryHackMe",
@@ -62,7 +61,9 @@ This repo is also a static site (no build step) meant for GitHub Pages. The home
 }
 ```
 
-`category` is the `id` of a category. `file` can point anywhere in the repo.
+`category` is the `id` of a category.
+
+The folder name is the URL: `writeups/my-challenge/` is published at `https://leeadrian841.github.io/ctf-writeups/my-challenge`. Use lowercase letters, numbers and hyphens, and keep each folder name unique.
 
 **Add a category**
 

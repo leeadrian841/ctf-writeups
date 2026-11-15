@@ -23,7 +23,10 @@ http
   .createServer((req, res) => {
     let rel = decodeURIComponent(new URL(req.url, "http://x").pathname);
     if (rel.endsWith("/")) rel += "index.html";
-    const file = path.join(root, rel);
+    let file = path.join(root, rel);
+    // /<folder-name> serves the writeup page, like the pages tools/build.js generates for GitHub Pages.
+    const name = rel.replace(/^\/+|\/+$/g, "");
+    if (name && !name.includes("/") && fs.existsSync(path.join(root, "writeups", name))) file = path.join(root, "writeup.html");
     if (!file.startsWith(root + path.sep)) return res.writeHead(403).end("Forbidden");
     fs.readFile(file, (err, buf) => {
       if (err) return res.writeHead(404).end("Not found");

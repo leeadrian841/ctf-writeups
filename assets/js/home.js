@@ -93,7 +93,7 @@
     const diff = w.difficulty ? `<span class="diff" style="--d:${esc(w.diff?.color || "")}">${esc(w.difficulty)}</span>` : "";
     const pts = w.points ? ` · ${esc(w.points)} pts` : "";
     return `
-      <a class="card reveal" href="writeup.html?w=${encodeURIComponent(w.slug)}" style="--cat:${esc(w.cat.color)}">
+      <a class="card reveal" href="${w.url}" style="--cat:${esc(w.cat.color)}">
         <div class="card-top">
           <h2>${esc(w.title)}</h2>
           <span class="badge">${esc(w.cat.name)}</span>

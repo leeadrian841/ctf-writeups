@@ -9,6 +9,8 @@ const CTF = (() => {
     return res.json();
   };
 
+  const slugOf = (file) => String(file || "").split("/").slice(-2, -1)[0] || "";
+
   // Loads site config, categories and the writeup list, and links them together.
   const load = async () => {
     const [site, categories, writeups] = await Promise.all([
@@ -24,6 +26,9 @@ const CTF = (() => {
       w.cat = catById.get(w.category) || { id: w.category, name: w.category || "Uncategorised", color: "#a8b3c2" };
       w.diff = diffById.get(w.difficulty) || null;
       w.tags = w.tags || [];
+      // The URL of a writeup is the name of the folder that holds its markdown file.
+      w.slug = slugOf(w.file) || w.slug;
+      w.url = encodeURIComponent(w.slug);
     }
     return { site, categories, writeups, catById, diffById };
   };

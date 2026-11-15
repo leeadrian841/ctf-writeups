@@ -1,6 +1,5 @@
 [
   {
-    "slug": "example-suid-privesc",
     "title": "Example: SUID Privilege Escalation",
     "category": "linux",
     "platform": "Example Platform",
@@ -14,7 +13,6 @@
     "sample": true
   },
   {
-    "slug": "example-repeating-key-xor",
     "title": "Example: Repeating-Key XOR",
     "category": "crypto",
     "platform": "Example Platform",
@@ -28,7 +26,6 @@
     "sample": true
   },
   {
-    "slug": "example-sql-injection-login",
     "title": "Example: SQL Injection Login Bypass",
     "category": "web",
     "platform": "Example Platform",
