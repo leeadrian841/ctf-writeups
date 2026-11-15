@@ -17,3 +17,13 @@ wordlists/
 # OS junk
 .DS_Store
 Thumbs.db
+
+# Credentials and local tool config
+.env.*
+id_rsa*
+id_ed25519*
+*.p12
+*.pfx
+.npmrc
+.netrc
+.claude/

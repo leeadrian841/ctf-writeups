@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CTF Writeups | Adrian Lee</title>
+  <meta name="description" content="Capture the Flag writeups by Adrian Lee: Linux, web, cryptography, forensics and more.">
+  <meta name="color-scheme" content="dark">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <a class="skip" href="#grid">Skip to writeups</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="./"><span class="prompt">~/</span><span data-brand>ctf-writeups</span><span class="cursor" aria-hidden="true"></span></a>
+      <p class="intro" id="intro"></p>
+      <nav class="intro-links" id="intro-links" aria-label="Author links"></nav>
+    </div>
+  </header>
+
+  <div class="toolbar">
+    <div class="wrap">
+      <div class="toolbar-row">
+        <label class="search">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input id="q" type="search" placeholder="Search titles, techniques, platforms" autocomplete="off" aria-label="Search writeups">
+        </label>
+
+        <button class="tool-btn" id="filters-btn" type="button" aria-expanded="false" aria-controls="filters">
+          <span class="label">Filters</span>
+          <span class="count" id="filter-count" hidden></span>
+          <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+
+        <div class="sort">
+          <button class="tool-btn" id="sort-btn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="sort-menu" aria-label="Sort writeups">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4v16"/><path d="m3 16 4 4 4-4"/><path d="M13 6h8"/><path d="M13 12h6"/><path d="M13 18h3"/></svg>
+            <span class="label" id="sort-label">Newest</span>
+          </button>
+          <ul class="sort-menu" id="sort-menu" role="menu" hidden></ul>
+        </div>
+      </div>
+
+      <section class="filters" id="filters" aria-label="Filters" hidden>
+        <div class="filters-head">
+          <fieldset class="match">
+            <legend class="skip">Technique matching</legend>
+            <span>Match techniques</span>
+            <label><input type="radio" name="match" value="all" checked> All</label>
+            <label><input type="radio" name="match" value="any"> Any</label>
+          </fieldset>
+          <button class="clear-btn" id="clear" type="button">Clear filters ✕</button>
+        </div>
+        <div class="filter-groups" id="filter-groups"></div>
+      </section>
+    </div>
+  </div>
+
+  <main class="wrap">
+    <p class="results-meta" id="results-meta" aria-live="polite"></p>
+    <div class="grid" id="grid"></div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap" data-footer></div>
+  </footer>
+
+  <script src="assets/js/common.js"></script>
+  <script src="assets/js/home.js"></script>
+</body>
+</html>

@@ -37,6 +37,55 @@ Template: [ctf-writeup-template.md](ctf-writeup-template.md)
 
 ---
 
+## Website
+
+This repo is also a static site (no build step) meant for GitHub Pages. The home page shows every writeup as a tile with search, filters and sort. Each tile opens the rendered markdown.
+
+**Add a writeup**
+
+1. Copy [ctf-writeup-template.md](ctf-writeup-template.md) to `writeups/<slug>/README.md` and fill it in. Images go in `writeups/<slug>/img/`.
+2. Add an entry to [data/writeups.json](data/writeups.json):
+
+```json
+{
+  "slug": "my-challenge",
+  "title": "My Challenge",
+  "category": "linux",
+  "platform": "TryHackMe",
+  "event": "Room Name",
+  "date": "2026-11-15",
+  "difficulty": "Easy",
+  "points": 100,
+  "tags": ["SUID", "Enumeration"],
+  "summary": "One or two sentences shown on the tile.",
+  "file": "writeups/my-challenge/README.md"
+}
+```
+
+`category` is the `id` of a category. `file` can point anywhere in the repo.
+
+**Add a category**
+
+Add an object to [data/categories.json](data/categories.json). It appears in the filters as soon as a writeup uses it.
+
+```json
+{ "id": "cloud", "name": "Cloud", "color": "#38bdf8", "description": "AWS, Azure and GCP misconfigurations." }
+```
+
+**Other settings**
+
+Site title, intro text, header links and difficulty levels live in [data/site.json](data/site.json).
+
+**Preview locally**
+
+```bash
+node tools/serve.js
+```
+
+Then open `http://localhost:8080`.
+
+---
+
 ## Repository Layout
 
 ```

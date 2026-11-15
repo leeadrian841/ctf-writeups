@@ -1,0 +1,62 @@
+[
+  {
+    "id": "linux",
+    "name": "Linux",
+    "color": "#4ade80",
+    "description": "Enumeration, privilege escalation and hardening on Linux hosts."
+  },
+  {
+    "id": "web",
+    "name": "Web",
+    "color": "#60a5fa",
+    "description": "Web application vulnerabilities: injection, auth flaws, SSRF, XSS."
+  },
+  {
+    "id": "crypto",
+    "name": "Cryptography",
+    "color": "#c084fc",
+    "description": "Breaking weak or misused cryptography."
+  },
+  {
+    "id": "forensics",
+    "name": "Forensics",
+    "color": "#fbbf24",
+    "description": "Disk, memory, log and packet capture analysis."
+  },
+  {
+    "id": "reverse",
+    "name": "Reverse Engineering",
+    "color": "#f472b6",
+    "description": "Static and dynamic analysis of binaries."
+  },
+  {
+    "id": "pwn",
+    "name": "Pwn",
+    "color": "#f87171",
+    "description": "Binary exploitation: memory corruption, ROP, format strings."
+  },
+  {
+    "id": "network",
+    "name": "Networking",
+    "color": "#22d3ee",
+    "description": "Protocol analysis, service enumeration and pivoting."
+  },
+  {
+    "id": "windows",
+    "name": "Windows / AD",
+    "color": "#818cf8",
+    "description": "Windows hosts and Active Directory attack paths."
+  },
+  {
+    "id": "osint",
+    "name": "OSINT",
+    "color": "#2dd4bf",
+    "description": "Open-source intelligence gathering."
+  },
+  {
+    "id": "misc",
+    "name": "Misc",
+    "color": "#a8b3c2",
+    "description": "Anything that does not fit elsewhere."
+  }
+]
