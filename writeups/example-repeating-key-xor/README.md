@@ -4,13 +4,17 @@
 
 | Field      | Value |
 |------------|-------|
-| Event      | Sample CTF 2026, 2026-10-17 to 2026-10-18 |
+| Platform   | Example Platform |
+| Event      | Sample CTF 2026 |
+| Date       | 2026-10-18 |
 | Category   | crypto |
+| Difficulty | Medium |
 | Points     | 250 (dynamic) |
 | Solves     | n/a |
 | Author     | n/a |
 | Solved by  | your-handle |
 | Status     | Solved during event |
+| Tags       | XOR, Known Plaintext, Python |
 
 ## TL;DR
 The ciphertext is XORed with a short repeating key. The flag format is known, so the first bytes of plaintext are known, and XORing them with the ciphertext reveals the key.

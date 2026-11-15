@@ -9,9 +9,9 @@ const CTF = (() => {
     return res.json();
   };
 
-  const slugOf = (file) => String(file || "").split("/").slice(-2, -1)[0] || "";
-
   // Loads site config, categories and the writeup list, and links them together.
+  // data/writeups.json is not a file in the repo: it is generated from the
+  // README in each writeups/<folder-name>/ by tools/scan.js.
   const load = async () => {
     const [site, categories, writeups] = await Promise.all([
       getJSON("data/site.json"),
@@ -22,12 +22,17 @@ const CTF = (() => {
     const diffById = new Map((site.difficulties || []).map((d, i) => [d.id, { ...d, rank: i }]));
 
     for (const w of writeups) {
-      // An unknown category id still renders, with a neutral colour.
-      w.cat = catById.get(w.category) || { id: w.category, name: w.category || "Uncategorised", color: "#a8b3c2" };
-      w.diff = diffById.get(w.difficulty) || null;
+      // The README's Category row may hold a category id ("crypto") or its name ("Cryptography").
+      const key = (w.category || "").toLowerCase();
+      // An unknown category still renders, with a neutral colour.
+      w.cat = categories.find((c) => c.id.toLowerCase() === key || c.name.toLowerCase() === key) ||
+        { id: key || "uncategorised", name: w.category || "Uncategorised", color: "#a8b3c2" };
+      const diff = [...diffById.values()].find((d) => d.id.toLowerCase() === (w.difficulty || "").toLowerCase());
+      w.difficulty = diff ? diff.id : w.difficulty;
+      w.diff = diff || null;
       w.tags = w.tags || [];
-      // The URL of a writeup is the name of the folder that holds its markdown file.
-      w.slug = slugOf(w.file) || w.slug;
+      w.fields = w.fields || [];
+      // The URL of a writeup is the name of its folder.
       w.url = encodeURIComponent(w.slug);
     }
     return { site, categories, writeups, catById, diffById };

@@ -2,13 +2,17 @@
 
 | Field      | Value |
 |------------|-------|
-| Event      | {Event name and edition}, {date range} |
+| Platform   | {HackTheBox / TryHackMe / OverTheWire / event organiser} |
+| Event      | {Event name and edition} |
+| Date       | {YYYY-MM-DD} |
 | Category   | {web / crypto / pwn / reverse / forensics / OSINT / misc} |
+| Difficulty | {Easy / Medium / Hard / Insane} |
 | Points     | {final points} ({static / dynamic}) |
 | Solves     | {number, if published} |
 | Author     | {challenge author, if credited} |
 | Solved by  | {your handle} ({team name}) |
 | Status     | {Solved during event / Upsolved after event} |
+| Tags       | {techniques, separated by commas} |
 
 ## TL;DR
 {One or two sentences: the bug class or trick, and the key insight.}
@@ -55,4 +59,4 @@
 
 ## References
 - {Docs, papers, other writeups that helped, with links}
-- Thanks to {author} for the challenge and {teammates} for {help}.
+- Thanks to {author} for the challenge and {teammates} for {help}.

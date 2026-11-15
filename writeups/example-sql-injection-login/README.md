@@ -4,13 +4,17 @@
 
 | Field      | Value |
 |------------|-------|
-| Event      | Sample CTF 2026, 2026-10-17 to 2026-10-18 |
+| Platform   | Example Platform |
+| Event      | Sample CTF 2026 |
+| Date       | 2026-10-17 |
 | Category   | web |
+| Difficulty | Easy |
 | Points     | 150 (static) |
 | Solves     | n/a |
 | Author     | n/a |
 | Solved by  | your-handle |
 | Status     | Solved during event |
+| Tags       | SQL Injection, Authentication, Burp Suite, CWE-89 |
 
 ## TL;DR
 The login form builds its SQL query by string concatenation. A quote in the username field breaks out of the string and bypasses the password check.

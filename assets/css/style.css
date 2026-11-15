@@ -266,15 +266,6 @@ button.chip[aria-pressed="true"] .n { color: inherit; }
 }
 a.cat-badge:hover { color: #0b0f14; filter: brightness(1.1); }
 
-.sample-note {
-  font-family: var(--mono);
-  font-size: 0.72rem;
-  color: var(--muted);
-  border: 1px dashed var(--border-strong);
-  border-radius: 4px;
-  padding: 0 6px;
-}
-
 .empty, .notice {
   text-align: center;
   padding: 64px 16px;

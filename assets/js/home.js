@@ -23,7 +23,7 @@
 
   const SORTS = {
     newest: { label: "Newest", fn: (a, b) => (b.date || "").localeCompare(a.date || "") },
-    oldest: { label: "Oldest", fn: (a, b) => (a.date || "").localeCompare(b.date || "") },
+    oldest: { label: "Oldest", fn: (a, b) => (a.date || "9999").localeCompare(b.date || "9999") },
     title: { label: "Title A-Z", fn: (a, b) => a.title.localeCompare(b.title) },
     category: { label: "Category", fn: (a, b) => a.cat.name.localeCompare(b.cat.name) || a.title.localeCompare(b.title) },
     difficulty: { label: "Difficulty", fn: (a, b) => (a.diff?.rank ?? 99) - (b.diff?.rank ?? 99) || a.title.localeCompare(b.title) },
@@ -91,7 +91,7 @@
     const extra = w.tags.length - shown.length;
     const meta = [w.platform, w.event, fmtDate(w.date)].filter(Boolean).map(esc).join(" · ");
     const diff = w.difficulty ? `<span class="diff" style="--d:${esc(w.diff?.color || "")}">${esc(w.difficulty)}</span>` : "";
-    const pts = w.points ? ` · ${esc(w.points)} pts` : "";
+    const pts = w.points ? `${esc(w.points)} pts` : "";
     return `
       <div class="col">
         <a class="tile reveal h-100 d-flex flex-column gap-2 p-3 px-sm-4 text-decoration-none" href="${w.url}" style="--cat:${esc(w.cat.color)}">
@@ -100,7 +100,7 @@
             <span class="cat-badge">${esc(w.cat.name)}</span>
           </div>
           <div class="tile-meta">${meta}</div>
-          <div class="tile-meta">${diff}${pts}${w.sample ? ' <span class="sample-note">sample</span>' : ""}</div>
+          <div class="tile-meta">${[diff, pts, esc(w.status)].filter(Boolean).join(" · ")}</div>
           ${w.summary ? `<p class="tile-summary m-0 flex-grow-1">${esc(w.summary)}</p>` : ""}
           <div class="d-flex flex-wrap gap-2">
             ${shown.map((t) => `<span class="chip">${esc(t)}</span>`).join("")}

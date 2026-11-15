@@ -39,31 +39,23 @@ Template: [ctf-writeup-template.md](ctf-writeup-template.md)
 
 ## Website
 
-This repo is also a static site (no build step) meant for GitHub Pages. The home page shows every writeup as a tile with search, filters and sort. Each tile opens the rendered markdown.
+This repo is also a website on GitHub Pages. The home page shows every writeup as a tile with search, filters and sort. Each tile opens the rendered markdown.
 
 **Add a writeup**
 
-1. Copy [ctf-writeup-template.md](ctf-writeup-template.md) to `writeups/<folder-name>/README.md` and fill it in. Images go in `writeups/<folder-name>/img/`.
-2. Add an entry to [data/writeups.json](data/writeups.json):
+Copy [ctf-writeup-template.md](ctf-writeup-template.md) to `writeups/<folder-name>/README.md`, fill it in and push. That is the only step: the site reads everything from the README. Images go in `writeups/<folder-name>/img/`.
 
-```json
-{
-  "title": "My Challenge",
-  "category": "linux",
-  "platform": "TryHackMe",
-  "event": "Room Name",
-  "date": "2026-11-15",
-  "difficulty": "Easy",
-  "points": 100,
-  "tags": ["SUID", "Enumeration"],
-  "summary": "One or two sentences shown on the tile.",
-  "file": "writeups/my-challenge/README.md"
-}
-```
+| Shown on the site | Comes from |
+|-------------------|------------|
+| Title | The `# Heading` line. The `(Category, pts): Event` part is dropped. |
+| Platform, event, date, difficulty, points, status | The matching rows of the `Field / Value` table |
+| Category | The `Category` row: a category `id` or name from [data/categories.json](data/categories.json) |
+| Technique chips | The `Tags` row, separated by commas |
+| Summary on the tile | The first paragraph under `## TL;DR` |
 
-`category` is the `id` of a category.
+Write the date as `YYYY-MM-DD` so sorting works. Rows left as `{placeholders}` or `n/a` are hidden. Any extra row you add to the table appears in the writeup page header.
 
-The folder name is the URL: `writeups/my-challenge/` is published at `https://leeadrian841.github.io/ctf-writeups/my-challenge`. Use lowercase letters, numbers and hyphens, and keep each folder name unique.
+The folder name is the URL: `writeups/my-challenge/` is published at `https://leeadrian841.github.io/ctf-writeups/my-challenge`. Use lowercase letters, numbers and hyphens.
 
 **Add a category**
 

@@ -1,13 +1,16 @@
 // Builds the site into _site/ for GitHub Pages: node tools/build.js
-// Copies the repo and writes one page per writeup folder, so that
-// writeups/<folder-name>/README.md is published at /<folder-name>.
+// Copies the repo, builds the writeup list from the READMEs and writes one page
+// per writeup folder, so writeups/<folder-name>/README.md is published at /<folder-name>.
 const fs = require("fs");
 const path = require("path");
+const { scan } = require("./scan");
 
 const root = path.resolve(__dirname, "..");
 const out = path.join(root, "_site");
 const skip = new Set([".git", ".github", "_site", "tools", "node_modules", ".claude"]);
 const reserved = new Set(["index", "writeup", "assets", "data", "writeups", "404"]);
+
+const NAME_OK = new RegExp("^[a-z0-9][a-z0-9-]*$");
 
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
@@ -18,7 +21,10 @@ for (const name of fs.readdirSync(root)) {
 }
 
 const site = JSON.parse(fs.readFileSync(path.join(root, "data/site.json"), "utf8"));
-const writeups = JSON.parse(fs.readFileSync(path.join(root, "data/writeups.json"), "utf8"));
+
+// The writeup list comes from the README in each writeups/<folder-name>/ (see tools/scan.js).
+const writeups = scan(root);
+fs.writeFileSync(path.join(out, "data/writeups.json"), JSON.stringify(writeups));
 
 // Stamp CSS and JS links with the commit id, so browsers never mix old cached scripts with new pages.
 const version = (process.env.GITHUB_SHA || String(Date.now())).slice(0, 10);
@@ -31,16 +37,18 @@ for (const page of ["index.html", "writeup.html"]) {
 
 const seen = new Set();
 for (const w of writeups) {
-  const slug = path.posix.basename(path.posix.dirname(w.file || ""));
-  const fail = (msg) => {
-    console.error(`Error in data/writeups.json, "${w.title}": ${msg}`);
+  const slug = w.slug;
+  if (!NAME_OK.test(slug)) {
+    console.error(`Error: folder "writeups/${slug}" must use only lowercase letters, numbers and hyphens`);
     process.exit(1);
-  };
-  if (!slug || slug === ".") fail(`"file" must be inside a folder, for example writeups/my-challenge/README.md`);
-  if (!/^[a-z0-9][a-z0-9-]*$/.test(slug)) fail(`folder name "${slug}" must use only lowercase letters, numbers and hyphens`);
-  if (reserved.has(slug)) fail(`folder name "${slug}" is reserved by the site`);
-  if (seen.has(slug)) fail(`folder name "${slug}" is used by more than one writeup`);
-  if (!fs.existsSync(path.join(root, w.file))) fail(`file not found: ${w.file}`);
+  }
+  if (reserved.has(slug)) {
+    console.error(`Error: folder name "${slug}" is reserved by the site`);
+    process.exit(1);
+  }
+  // Missing fields do not stop the build, but they are worth knowing about.
+  const missing = ["category", "date", "difficulty", "summary"].filter((k) => !w[k]);
+  if (missing.length) console.warn(`Note: writeups/${slug}/README.md has no ${missing.join(", ")}`);
   seen.add(slug);
 
   // Real title and description in the HTML, so shared links preview properly.

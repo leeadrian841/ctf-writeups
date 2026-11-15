@@ -2,6 +2,7 @@
 const http = require("http");
 const fs = require("fs");
 const path = require("path");
+const { scan } = require("./scan");
 
 const root = path.resolve(__dirname, "..");
 const port = process.env.PORT || 8080;
@@ -28,6 +29,11 @@ http
     const name = rel.replace(/^\/+|\/+$/g, "");
     if (name && !name.includes("/") && fs.existsSync(path.join(root, "writeups", name))) file = path.join(root, "writeup.html");
     if (!file.startsWith(root + path.sep)) return res.writeHead(403).end("Forbidden");
+    // The writeup list is read fresh from the READMEs on every request.
+    if (rel === "/data/writeups.json") {
+      res.writeHead(200, { "Content-Type": types[".json"], "Cache-Control": "no-store" });
+      return res.end(JSON.stringify(scan(root)));
+    }
     fs.readFile(file, (err, buf) => {
       if (err) return res.writeHead(404).end("Not found");
       res.writeHead(200, { "Content-Type": types[path.extname(file).toLowerCase()] || "application/octet-stream", "Cache-Control": "no-store" });

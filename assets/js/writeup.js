@@ -23,19 +23,17 @@
 
   // ---------- Header ----------
 
-  const meta = [
-    ["Platform", w.platform],
-    ["Event", w.event],
-    ["Date", fmtDate(w.date)],
-    ["Difficulty", w.difficulty],
-    ["Points", w.points],
-  ].filter(([, v]) => v);
+  // Every filled-in row of the README's field table, in README order.
+  // Category and Tags are shown as the badge and the chips instead.
+  const meta = w.fields
+    .filter(([k]) => !["category", "tags", "techniques"].includes(k.toLowerCase()))
+    .map(([k, v]) => [k, k.toLowerCase() === "date" ? fmtDate(v) : v]);
 
   $("head").innerHTML = `
     <header class="w-head" style="--cat:${esc(w.cat.color)}">
       <a class="cat-badge text-decoration-none" href="./#cat=${encodeURIComponent(w.cat.id)}">${esc(w.cat.name)}</a>
       <h1>${esc(w.title)}</h1>
-      <ul class="w-meta list-unstyled d-flex flex-wrap column-gap-4 row-gap-1 mb-3">${meta.map(([k, v]) => `<li>${k}: <b>${esc(v)}</b></li>`).join("")}</ul>
+      <ul class="w-meta list-unstyled d-flex flex-wrap column-gap-4 row-gap-1 mb-3">${meta.map(([k, v]) => `<li>${esc(k)}: <b>${esc(v)}</b></li>`).join("")}</ul>
       <div class="d-flex flex-wrap gap-2">${w.tags.map((t) => `<a class="chip text-decoration-none" href="./#tag=${encodeURIComponent(t)}">${esc(t)}</a>`).join("")}</div>
     </header>`;
 
@@ -55,6 +53,10 @@
 
   marked.setOptions({ gfm: true });
   content.innerHTML = DOMPurify.sanitize(marked.parse(md));
+
+  // The field table is already shown in the page header, so leave it out of the article.
+  const fieldTable = content.querySelector("table");
+  if (fieldTable && /^field$/i.test(fieldTable.querySelector("th")?.textContent.trim() || "")) fieldTable.remove();
 
   // Relative image and link paths are written relative to the markdown file, so resolve them from there.
   const base = new URL(w.file, location.href);

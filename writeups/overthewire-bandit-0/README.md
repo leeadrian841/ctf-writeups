@@ -2,13 +2,17 @@
 
 | Field      | Value |
 |------------|-------|
+| Platform   | OverTheWire |
 | Event      | Bandit |
+| Date       | {YYYY-MM-DD} |
 | Category   | linux |
+| Difficulty | {Easy / Medium / Hard / Insane} |
 | Points     | N/A |
 | Solves     | 0 |
 | Author     | OverTheWire |
 | Solved by  | {your handle} ({team name}) |
 | Status     | Solved |
+| Tags       | {techniques, separated by commas} |
 
 ## TL;DR
 {One or two sentences: the bug class or trick, and the key insight.}

@@ -4,13 +4,17 @@
 
 | Field      | Value |
 |------------|-------|
-| Event      | Sample Lab, 2026-11-01 |
+| Platform   | Example Platform |
+| Event      | Sample Lab |
+| Date       | 2026-11-01 |
 | Category   | linux |
+| Difficulty | Easy |
 | Points     | 100 (static) |
 | Solves     | n/a |
 | Author     | n/a |
 | Solved by  | your-handle |
 | Status     | Solved during event |
+| Tags       | SUID, GTFOBins, Enumeration, Privilege Escalation |
 
 ## TL;DR
 A SUID-root copy of `find` was left on the box. `find -exec` runs commands with the file owner's privileges, which gives a root shell.

@@ -2,13 +2,17 @@
 
 | Field      | Value |
 |------------|-------|
+| Platform   | OverTheWire |
 | Event      | {Event name and edition}, {date range} |
+| Date       | {YYYY-MM-DD} |
 | Category   | linux |
+| Difficulty | {Easy / Medium / Hard / Insane} |
 | Points     | {final points} ({static / dynamic}) |
 | Solves     | {number, if published} |
 | Author     | {challenge author, if credited} |
 | Solved by  | {your handle} ({team name}) |
 | Status     | {Solved during event / Upsolved after event} |
+| Tags       | {techniques, separated by commas} |
 
 ## TL;DR
 {One or two sentences: the bug class or trick, and the key insight.}
