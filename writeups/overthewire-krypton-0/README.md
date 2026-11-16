@@ -49,6 +49,7 @@ $EncodedText = "S1JZUFRPTklTR1JFQVQ="
 ```
 
 __What if it is NOT Base64 encoded?__
+
 You may come across strings that are not Base64 encoded. This error will appear when you decode any non-Base64 string.
 If the string contains characters outside the standard Base64 alphabet (`A-Z`, `a-z`, `0-9`, `+`, `/`, `=`) or has an invalid length, `[System.Convert]::FromBase64String()` will immediately throw a terminating .NET exception.
 
@@ -57,6 +58,7 @@ Exception calling "FromBase64String" with "1" argument(s): "The input is not a v
 ```
 
 __What if it is Base64 encoded but uses the wrong text encoding?__
+
 PowerShell will not throw an error if you use `[System.Text.Encoding]::UTF8.GetString()` on bytes that were actually encoded in UTF-16, ASCII, or Latin-1. Instead, it silently outputs garbled text (known as mojibake).
 
 ![{Describe what the screenshot shows}](img/{file}.png)
