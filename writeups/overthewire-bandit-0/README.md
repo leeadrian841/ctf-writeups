@@ -20,15 +20,21 @@ The password for the next level is stored in a file called readme located in the
 ## Challenge
 > Find the password stored in a file called `readme` located in the home directory
 
-- Files: `readme` (sha256: `{hash}`)
+- Files: `readme`
 - Service: `bandit0@bandit.labs.overthewire.org:2220` (online)
 
 ## First look
-{What you checked first and why. Paste key output as text, trimmed.}
+I checked the list of files into the current directory using the command `ls`. This is to find what are the files in the current directory and this is excluding hidden files.
+If we are looking for everything including hidden files, then we will need to use the same command but with `-a`.
 
 ```
-{command}
-{trimmed output}
+ssh bandit0@bandit.labs.overthewire.org -p 2220
+Password: {Password for Level 0}
+
+bandit0@bandit:~$ ls
+readme
+bandit0@bandit:~$ cat readme
+{Password for Level 1}
 ```
 
 ## Dead ends
