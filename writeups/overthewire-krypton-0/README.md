@@ -15,27 +15,21 @@
 | Tags       | Cryptography |
 
 ## TL;DR
-The password for the next level is stored in a file called `-` located in the home directory.
+The password is encoded in a string using Base64.
 
 ## Challenge
-> Find the password for the next level is stored in a file called `-` located in the home directory
+> Decode the string using Base64 and use the password to log in to krypton.labs.overthewire.org with username krypton1 using SSH on port 2231.
 
-- Files: `-`
-- Service: `bandit1@bandit.labs.overthewire.org:2220` (online)
+- String: `S1JZUFRPTklTR1JFQVQ=` (Encoded Base64)
+- Service: `krypton1@krypton.labs.overthewire.org:2231` (online)
 
 ## First look
 {What you checked first and why. Paste key output as text, trimmed.}
 
 ```
-ssh bandit1@bandit.labs.overthewire.org -p 2220
-Password: {Password for bandit1}
+ssh krypton1@krypton.labs.overthewire.org -p 2231
+Password: {Password for krypton1}
 
-bandit1@bandit:~$ ls
--
-bandit1@bandit:~$ cat -
-
-bandit1@bandit:~$ cat ./-
-{Password for bandit2}
 ```
 
 ## Dead ends
