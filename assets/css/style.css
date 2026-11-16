@@ -486,6 +486,20 @@ a.cat-badge:hover { color: #0b0f14; filter: brightness(1.1); }
   border-radius: var(--radius);
 }
 
+/* Terminal sessions (code blocks with no language): see "Terminal colouring" in writeup.js */
+.t-user { color: #3ddc97; font-weight: 600; }  /* user@host */
+.t-path { color: #8fc7ff; }                    /* ~ or /some/path */
+.t-sym { color: #8496a8; }                     /* : $ # */
+.t-cmd { color: #7fe3e0; font-weight: 600; }   /* ssh, ls, cat */
+.t-flag { color: #ffc27a; }                    /* -p, --help */
+.t-str { color: #a5e6a0; }                     /* "quoted text" */
+.t-arg { color: #e6edf3; }                     /* other arguments */
+.t-op { color: #ff9eb8; }                      /* | && > */
+.t-label { color: #ffd580; }                   /* Password: */
+.t-out { color: #b4c2cf; }                     /* command output */
+.t-ph { color: #e0b8ff; font-style: italic; }  /* {placeholder} */
+.t-error { color: #ff9a9a; }                   /* ```error blocks */
+
 /* highlight.js tokens */
 .hljs-comment, .hljs-quote { color: #8496a8; font-style: italic; }
 .hljs-keyword, .hljs-selector-tag, .hljs-literal, .hljs-section, .hljs-doctag { color: #ff9eb8; }

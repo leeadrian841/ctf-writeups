@@ -83,15 +83,77 @@
     wrap.appendChild(t);
   });
 
+  // ---------- Terminal colouring ----------
+  // Code blocks with no language (or console / terminal / shell / output) are
+  // coloured as a terminal session: prompts, commands, flags, strings, labels
+  // and {placeholders} each get their own colour.
+
+  const COMMANDS = new Set(
+    ("ssh scp sftp ls cat cd pwd find grep egrep awk sed sort uniq strings file xxd base64 tr cut head tail wc echo printf " +
+      "sudo su id whoami uname chmod chown mkdir rm cp mv ln touch tar unzip gzip gunzip bzip2 7z openssl nc ncat netcat nmap " +
+      "curl wget ping dig nslookup host telnet ftp python python3 pip pip3 perl ruby php node npm git gcc make gdb ltrace strace " +
+      "objdump readelf docker hydra john hashcat gobuster ffuf nikto sqlmap msfconsole tcpdump tshark binwalk exiftool steghide " +
+      "diff man export source env ps kill mount df du history which whereis locate crontab systemctl service apt apt-get").split(" ")
+  );
+  const span = (cls, text) => (text ? `<span class="${cls}">${esc(text)}</span>` : "");
+  // Plain text with {placeholders} picked out.
+  const withPlaceholders = (text, cls) =>
+    text
+      .split(/(\{[^{}\n]*\})/)
+      .map((part, i) => (i % 2 ? span("t-ph", part) : cls ? span(cls, part) : esc(part)))
+      .join("");
+  // A command line: first word is the command, then flags, strings and arguments.
+  const command = (text) => {
+    let first = true;
+    return (text.match(/"[^"]*"|'[^']*'|\{[^{}]*\}|\s+|[^\s]+/g) || [])
+      .map((tok) => {
+        if (/^\s+$/.test(tok)) return tok;
+        if (/^\{.*\}$/.test(tok)) return span("t-ph", tok);
+        if (first) return (first = false), span("t-cmd", tok);
+        if (/^["']/.test(tok)) return span("t-str", tok);
+        if (/^-/.test(tok)) return span("t-flag", tok);
+        // After a pipe or && the next word is a new command.
+        if (["|", "&&", "||", ";"].includes(tok)) return (first = true), span("t-op", tok);
+        if (/^\d?[<>]{1,2}$/.test(tok)) return span("t-op", tok);
+        return span("t-arg", tok);
+      })
+      .join("");
+  };
+  const terminalLine = (line) => {
+    let m;
+    // user@host:path$ command
+    if ((m = line.match(/^([\w.-]+@[\w.-]+)(:)([^$#]*)([$#])(\s?)(.*)$/))) {
+      return span("t-user", m[1]) + span("t-sym", m[2]) + span("t-path", m[3]) + span("t-sym", m[4]) + m[5] + command(m[6]);
+    }
+    // $ command, # command, PS C:\> command
+    if ((m = line.match(/^(\$|#|>|PS [^>]*>)(\s+)(.*)$/))) return span("t-sym", m[1]) + m[2] + command(m[3]);
+    // A line that starts with a well-known command and has no prompt
+    if ((m = line.match(/^(sudo\s+)?([\w.-]+)(\s|$)/)) && COMMANDS.has(m[2])) return command(line);
+    // Label: value
+    if ((m = line.match(/^([A-Za-z][\w ()-]{0,30}:)(\s.*|$)/))) return span("t-label", m[1]) + withPlaceholders(m[2], "t-out");
+    return withPlaceholders(line, "t-out");
+  };
+  const TERMINAL_LANGS = new Set(["", "console", "terminal", "shell", "shell-session", "output", "text", "plaintext"]);
+
   // Code blocks: syntax highlighting, language label, copy button.
   content.querySelectorAll("pre > code").forEach((code) => {
-    const lang = (code.className.match(/language-([\w+-]+)/) || [])[1] || "";
-    if (lang && hljs.getLanguage(lang)) hljs.highlightElement(code);
+    const lang = ((code.className.match(/language-([^\s]+)/) || [])[1] || "").toLowerCase();
+    const raw = code.textContent;
+    if (TERMINAL_LANGS.has(lang) || /^\{.*\}$/.test(lang)) {
+      code.innerHTML = raw.replace(/\n$/, "").split("\n").map(terminalLine).join("\n");
+    } else if (lang === "error") {
+      code.innerHTML = span("t-error", raw);
+    } else if (hljs.getLanguage(lang)) {
+      hljs.highlightElement(code);
+    } else {
+      // Unknown language name: let highlight.js work it out from the code itself.
+      code.innerHTML = hljs.highlightAuto(raw).value;
+    }
 
     const pre = code.parentElement;
     const box = document.createElement("div");
     box.className = "code";
-    box.innerHTML = `<div class="code-bar"><span>${esc(lang || "output")}</span><button class="copy" type="button">Copy</button></div>`;
+    box.innerHTML = `<div class="code-bar"><span>${esc(/^\{.*\}$/.test(lang) ? "code" : lang || "terminal")}</span><button class="copy" type="button">Copy</button></div>`;
     pre.replaceWith(box);
     box.appendChild(pre);
 
