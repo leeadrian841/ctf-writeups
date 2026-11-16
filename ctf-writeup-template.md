@@ -4,7 +4,7 @@
 |------------|-------|
 | Platform   | {HackTheBox / TryHackMe / OverTheWire / event organiser} |
 | Event      | {Event name and edition} |
-| Date       | {YYYY-MM-DD} |
+| Date       | {YYYY or YYYY-MM} |
 | Category   | {web / crypto / pwn / reverse / forensics / OSINT / misc} |
 | Difficulty | {Easy / Medium / Hard / Insane} |
 | Points     | {final points} ({static / dynamic}) |

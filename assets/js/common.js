@@ -38,12 +38,18 @@ const CTF = (() => {
     return { site, categories, writeups, catById, diffById };
   };
 
-  const fmtDate = (iso) => {
-    if (!iso) return "";
-    const d = new Date(iso + (iso.length === 7 ? "-01" : "") + "T00:00:00");
-    if (isNaN(d)) return iso;
-    const opts = iso.length === 7 ? { year: "numeric", month: "short" } : { year: "numeric", month: "short", day: "numeric" };
-    return d.toLocaleDateString("en-GB", opts);
+  // The Date row accepts a year or a year and month:
+  //   2026     -> 2026
+  //   2026-02  -> Feb-2026
+  // A full date (2026-02-14) still works and shows as 14-Feb-2026.
+  const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const fmtDate = (value) => {
+    const m = String(value || "").trim().match(/^(\d{4})(?:-(\d{1,2}))?(?:-(\d{1,2}))?$/);
+    if (!m) return value || "";
+    const [, year, month, day] = m;
+    const name = month && MONTHS[Number(month) - 1];
+    if (!name) return year;
+    return day ? `${Number(day)}-${name}-${year}` : `${name}-${year}`;
   };
 
   const header = (site) => {

@@ -53,7 +53,7 @@ Copy [ctf-writeup-template.md](ctf-writeup-template.md) to `writeups/<folder-nam
 | Technique chips | The `Tags` row, separated by commas |
 | Summary on the tile | The first paragraph under `## TL;DR` |
 
-Write the date as `YYYY-MM-DD` so sorting works. Rows left as `{placeholders}` or `n/a` are hidden. Any extra row you add to the table appears in the writeup page header.
+Write the date as `YYYY` (shown as `2026`) or `YYYY-MM` (shown as `Feb-2026`). Rows left as `{placeholders}` or `n/a` are hidden. Any extra row you add to the table appears in the writeup page header.
 
 The folder name is the URL: `writeups/my-challenge/` is published at `https://leeadrian841.github.io/ctf-writeups/my-challenge`. Use lowercase letters, numbers and hyphens.
 
