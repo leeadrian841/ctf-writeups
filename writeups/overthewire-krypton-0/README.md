@@ -36,19 +36,33 @@ Password: {Password for krypton1}
 - Tried to `cat` the `-` file normally: Didn't work -> The file is named using syntax such as operators & symbols.
 
 ## Solution
-### Reading files named using operators using the path prefix `./` method
-If a file starts with a hyphen (for example, `-rf` or `-help`), running a command like `rm -rf` or `cat -help` causes the terminal to read the filename as a command option or flag rather than a target file.
-So you have to prepend `./` (the current directory indicator) to the filename such as `cat ./-` to read the `-` file.
+### Linux
 
-```{language}
-# solve script: minimal, commented, no hardcoded secrets
-{code}
+
+### PowerShell (Windows)
+You can also decode Base64 strings in PowerShell. Usually, UTF8 text encoding is used.
+
+```Powershell
+# How to decode Base64 string in Windows PowerShell
+$EncodedText = "S1JZUFRPTklTR1JFQVQ="
+[System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($EncodedText))
 ```
+
+__What if it is NOT Base64 encoded?__
+You may come across strings that are not Base64 encoded. This error will appear when you decode any non-Base64 string.
+If the string contains characters outside the standard Base64 alphabet (`A-Z`, `a-z`, `0-9`, `+`, `/`, `=`) or has an invalid length, `[System.Convert]::FromBase64String()` will immediately throw a terminating .NET exception.
+
+```Error
+Exception calling "FromBase64String" with "1" argument(s): "The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters."
+```
+
+__What if it is Base64 encoded but uses the wrong text encoding?__
+PowerShell will not throw an error if you use `[System.Text.Encoding]::UTF8.GetString()` on bytes that were actually encoded in UTF-16, ASCII, or Latin-1. Instead, it silently outputs garbled text (known as mojibake).
 
 ![{Describe what the screenshot shows}](img/{file}.png)
 
 ## Flag
-`Password for bandit2`
+`Password for krypton1`
 
 ## Lessons learned
 - Checking the naming convention of files in Linux first.
