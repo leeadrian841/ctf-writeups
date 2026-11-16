@@ -46,9 +46,15 @@ bandit1@bandit:~$ cat ./-
 If a file starts with a hyphen (for example, `-rf` or `-help`), running a command like `rm -rf` or `cat -help` causes the terminal to read the filename as a command option or flag rather than a target file.
 So you have to prepend `./` (the current directory indicator) to the filename such as `cat ./-` to read the `-` file.
 
-```{language}
+```bash
 # solve script: minimal, commented, no hardcoded secrets
-{code}
+
+
+# Can be used with other commands too
+touch ./-myfile
+cat ./-myfile
+mv ./-myfile ./newfile
+rm ./-myfile
 ```
 
 ![{Describe what the screenshot shows}](img/{file}.png)
@@ -62,5 +68,5 @@ So you have to prepend `./` (the current directory indicator) to the filename su
 - Knowing how operators & symbols can affect the commands running in the terminal.
 
 ## References
-- {Docs, papers, other writeups that helped, with links}
-- Thanks to {author} for the challenge and {teammates} for {help}.
+- [Google Search - Dashed Filename](https://www.google.com/search?q=dashed+filename)
+- [Advanced Bash-Scripting Guide: Special Characters](https://linux.die.net/abs-guide/special-chars.html)
