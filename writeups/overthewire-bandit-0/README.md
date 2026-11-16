@@ -15,7 +15,7 @@
 | Tags       | Linux |
 
 ## TL;DR
-The password for the next level is stored in a file called readme located in the home directory. Use this password to log into bandit1 using SSH. Whenever you find a password for a level, use SSH (on port 2220) to log into that level and continue the game.
+The password for the next level is stored in a file called `readme` located in the home directory. Use this password to log into bandit1 using SSH. Whenever you find a password for a level, use SSH (on port 2220) to log into that level and continue the game.
 
 ## Challenge
 > Find the password stored in a file called `readme` located in the home directory
@@ -33,24 +33,32 @@ Password: {Password for Level 0}
 
 bandit0@bandit:~$ ls
 readme
+bandit0@bandit:~$ file readme
+readme: ASCII text
 bandit0@bandit:~$ cat readme
 {Password for Level 1}
 ```
 
 ## Dead ends
-- {Idea}: {what happened} -> {why it didn't work}
-- {Idea}: {what happened} -> {why it didn't work}
+- None expected
 
 ## Solution
-### Step 1: {what this step achieves}
-{Why you took this step, what you expected, what you saw.}
+### Step 1: List the files or content in any directory
+We have to check what are the files inside the current directory.
 
-### Step 2: {what this step achieves}
-{Reasoning first, then the minimum command or code.}
+```Bash (Linux)
+# List the files or content in any directory
+bandit0@bandit:~$ ls
+readme
+```
 
-```{language}
-# solve script: minimal, commented, no hardcoded secrets
-{code}
+### Step 2: Check the file's data type before running it
+We should check any file's data type first even before running it. A file can contain anything inside, and it can be any malicious code too. Even threat actors can hack the system and gain access to any files and amend them. It is of best practices to check the contents of any file before running it.
+
+```Bash (Linux)
+# Check the file's actual data type before running it
+bandit0@bandit:~$ file readme
+readme: ASCII text
 ```
 
 ![{Describe what the screenshot shows}](img/{file}.png)
@@ -60,7 +68,7 @@ bandit0@bandit:~$ cat readme
 
 ## Lessons learned
 - {What you'd check first next time}
-- {Tool or technique you learned}
+- Checking unknown files before running them. You never know what these unknown files can contain.
 - {What made the challenge click}
 
 ## References
