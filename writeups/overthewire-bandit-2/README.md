@@ -15,35 +15,36 @@
 | Tags       | Linux |
 
 ## TL;DR
-The password for the next level is stored in a file called `-` located in the home directory.
+The password for the next level is stored in a file called `--spaces in this filename--` located in the home directory.
 
 ## Challenge
-> Find the password for the next level is stored in a file called `-` located in the home directory
+> Find the password for the next level is stored in a file called `--spaces in this filename--` located in the home directory
 
-- Files: `-`
+- Files: `--spaces in this filename--`
 - Service: `bandit2@bandit.labs.overthewire.org:2220` (online)
 
 ## First look
 {What you checked first and why. Paste key output as text, trimmed.}
 
 ```
-ssh bandit1@bandit.labs.overthewire.org -p 2220
-Password: {Password for bandit1}
+ssh bandit2@bandit.labs.overthewire.org -p 2220
+Password: {Password for bandit2}
 
 bandit1@bandit:~$ ls
 -
 bandit1@bandit:~$ cat -
 
 bandit1@bandit:~$ cat ./-
-{Password for bandit2}
+{Password for bandit3}
 ```
 
 ## Dead ends
-- Tried to `cat` the `-` file normally: Didn't work -> The file is named using syntax such as operators & symbols.
+- Tried to `cat` the `--spaces in this filename--` file normally: Didn't work -> The file is named using syntax such as operators & symbols. This is similar to the previous level.
 
 ## Solution
 ### Reading files named using operators using the path prefix `./` method
 If a file starts with a hyphen (for example, `-rf` or `-help`), running a command like `rm -rf` or `cat -help` causes the terminal to read the filename as a command option or flag rather than a target file.
+
 So you have to prepend `./` (the current directory indicator) to the filename such as `cat ./-` to read the `-` file.
 
 ```{language}

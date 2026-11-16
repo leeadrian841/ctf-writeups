@@ -46,7 +46,7 @@ bandit1@bandit:~$ cat ./-
 If a file starts with a hyphen (for example, `-rf` or `-help`), running a command like `rm -rf` or `cat -help` causes the terminal to read the filename as a command option or flag rather than a target file.
 So you have to prepend `./` (the current directory indicator) to the filename such as `cat ./-` to read the `-` file.
 
-```{language}
+```
 # solve script: minimal, commented, no hardcoded secrets
 {code}
 ```

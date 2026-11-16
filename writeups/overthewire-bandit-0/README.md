@@ -46,7 +46,7 @@ bandit0@bandit:~$ cat readme
 ### Step 1: List the files or content in any directory
 We have to check what are the files inside the current directory.
 
-```Bash (Linux)
+```bash
 # List the files or content in any directory
 bandit0@bandit:~$ ls
 readme
@@ -55,22 +55,18 @@ readme
 ### Step 2: Check the file's data type before running it
 We should check any file's data type first even before running it. A file can contain anything inside, and it can be any malicious code too. Even threat actors can hack the system and gain access to any files and amend them. It is of best practices to check the contents of any file before running it.
 
-```Bash (Linux)
+```bash
 # Check the file's actual data type before running it
 bandit0@bandit:~$ file readme
 readme: ASCII text
 ```
 
-![{Describe what the screenshot shows}](img/{file}.png)
-
 ## Flag
 `Password for Level 1`
 
 ## Lessons learned
-- {What you'd check first next time}
 - Checking unknown files before running them. You never know what these unknown files can contain.
-- {What made the challenge click}
+- Never assume that every file is safe to execute or run.
 
 ## References
-- {Docs, papers, other writeups that helped, with links}
-- Thanks to {author} for the challenge and {teammates} for {help}.
+- None

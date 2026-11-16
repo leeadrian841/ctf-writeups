@@ -59,4 +59,4 @@
 
 ## References
 - {Docs, papers, other writeups that helped, with links}
-- Thanks to {author} for the challenge and {teammates} for {help}.
+- Thanks to {author} for the challenge and {teammates} for {help}.
