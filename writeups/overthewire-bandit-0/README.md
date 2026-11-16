@@ -1,4 +1,4 @@
-# OverTheWire - Bandit 0 (Linux): Bandit Level 0 (2026)
+# OverTheWire - Bandit Lvl 0 (Linux): Bandit (2026)
 
 | Field      | Value |
 |------------|-------|
