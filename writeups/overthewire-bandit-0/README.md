@@ -1,18 +1,18 @@
-# OverTheWire (Linux): Bandit Level 0 (2026)
+# OverTheWire - Bandit 0 (Linux): Bandit Level 0 (2026)
 
 | Field      | Value |
 |------------|-------|
 | Platform   | OverTheWire |
 | Event      | Bandit |
 | Date       | 2026 |
-| Category   | linux |
+| Category   | Linux |
 | Difficulty | Easy |
 | Points     | N/A |
 | Solves     | 0 |
 | Author     | OverTheWire |
 | Solved by  | leeadrian841 |
 | Status     | Solved |
-| Tags       | linux |
+| Tags       | Linux |
 
 ## TL;DR
 The password for the next level is stored in a file called readme located in the home directory. Use this password to log into bandit1 using SSH. Whenever you find a password for a level, use SSH (on port 2220) to log into that level and continue the game.
