@@ -111,6 +111,7 @@
         if (/^\{.*\}$/.test(tok)) return span("t-ph", tok);
         if (first) return (first = false), span("t-cmd", tok);
         if (/^["']/.test(tok)) return span("t-str", tok);
+        if (/^\$[\w{]/.test(tok)) return span("t-var", tok);
         if (/^-/.test(tok)) return span("t-flag", tok);
         // After a pipe or && the next word is a new command.
         if (["|", "&&", "||", ";"].includes(tok)) return (first = true), span("t-op", tok);
@@ -125,8 +126,10 @@
     if ((m = line.match(/^([\w.-]+@[\w.-]+)(:)([^$#]*)([$#])(\s?)(.*)$/))) {
       return span("t-user", m[1]) + span("t-sym", m[2]) + span("t-path", m[3]) + span("t-sym", m[4]) + m[5] + command(m[6]);
     }
-    // $ command, # command, PS C:\> command
-    if ((m = line.match(/^(\$|#|>|PS [^>]*>)(\s+)(.*)$/))) return span("t-sym", m[1]) + m[2] + command(m[3]);
+    // # comment
+    if (/^\s*#/.test(line)) return span("t-comment", line);
+    // $ command, PS C:\> command
+    if ((m = line.match(/^(\$|>|PS [^>]*>)(\s+)(.*)$/))) return span("t-sym", m[1]) + m[2] + command(m[3]);
     // A line that starts with a well-known command and has no prompt
     if ((m = line.match(/^(sudo\s+)?([\w.-]+)(\s|$)/)) && COMMANDS.has(m[2])) return command(line);
     // Label: value
@@ -135,11 +138,18 @@
   };
   const TERMINAL_LANGS = new Set(["", "console", "terminal", "shell", "shell-session", "output", "text", "plaintext"]);
 
+  // Blocks tagged bash / sh / zsh are usually a pasted session (prompt, command,
+  // output), so they get the terminal colours too. Only a real script, with a
+  // shebang or if / for / while / function, goes to highlight.js instead.
+  const SHELL_LANGS = new Set(["bash", "sh", "zsh", "ksh", "fish"]);
+  const isScript = (text) =>
+    /^#!/.test(text) || /^\s*(if|then|else|elif|fi|for|while|until|do|done|case|esac|function)\b/m.test(text) || /^\s*[\w-]+\s*\(\)\s*\{/m.test(text);
+
   // Code blocks: syntax highlighting, language label, copy button.
   content.querySelectorAll("pre > code").forEach((code) => {
     const lang = ((code.className.match(/language-([^\s]+)/) || [])[1] || "").toLowerCase();
     const raw = code.textContent;
-    if (TERMINAL_LANGS.has(lang) || /^\{.*\}$/.test(lang)) {
+    if (TERMINAL_LANGS.has(lang) || /^\{.*\}$/.test(lang) || (SHELL_LANGS.has(lang) && !isScript(raw))) {
       code.innerHTML = raw.replace(/\n$/, "").split("\n").map(terminalLine).join("\n");
     } else if (lang === "error") {
       code.innerHTML = span("t-error", raw);

@@ -499,6 +499,8 @@ a.cat-badge:hover { color: #0b0f14; filter: brightness(1.1); }
 .t-out { color: #b4c2cf; }                     /* command output */
 .t-ph { color: #e0b8ff; font-style: italic; }  /* {placeholder} */
 .t-error { color: #ff9a9a; }                   /* ```error blocks */
+.t-comment { color: #8496a8; font-style: italic; } /* # comment */
+.t-var { color: #ffb86b; }                     /* $VARIABLE */
 
 /* highlight.js tokens */
 .hljs-comment, .hljs-quote { color: #8496a8; font-style: italic; }
