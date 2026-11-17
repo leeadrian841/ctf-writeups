@@ -15,48 +15,52 @@
 | Tags       | Linux |
 
 ## TL;DR
-{One or two sentences: the bug class or trick, and the key insight.}
+The password for the next level is stored in the file `data.txt`, which contains Base64 encoded data.
 
 ## Challenge
-> {Paste the challenge description exactly as given.}
+> Find the password for the next level which is stored in the file `data.txt`, which contains Base64 encoded data.
 
-- Files: `{filename}` (sha256: `{hash}`)
-- Service: `{chal.example.lab:port}` (event infrastructure, now offline)
+- Files: `data.txt` (Base64 encoded)
+- Service: `bandit10@bandit.labs.overthewire.org:2220` (online)
 
 ## First look
-{What you checked first and why. Paste key output as text, trimmed.}
+I checked the contents of the `data.txt` file first and noticed that the string ends with `=`. This shows that it is Base64 encoded and you can use the `base64` command to decode it to find the password for `bandit11`.
 
-```
-{command}
-{trimmed output}
+```bash
+ssh bandit10@bandit.labs.overthewire.org -p 2220
+Password: {Password for bandit10}
+
+bandit10@bandit:~$ ls
+data.txt
+bandit10@bandit:~$ file data.txt
+data.txt: ASCII text
+bandit10@bandit:~$ head data.txt
+VGhlIHBhc3N3b3JkIGlzIHBZZk9ZNkh3VXNEajVyTDlVdnloVTdNQ212OHZONVJvCg==
 ```
 
 ## Dead ends
-- {Idea}: {what happened} -> {why it didn't work}
-- {Idea}: {what happened} -> {why it didn't work}
+- None
 
 ## Solution
-### Step 1: {what this step achieves}
-{Why you took this step, what you expected, what you saw.}
+### Use `base64`
+Base64 is a reversible binary-to-text encoding scheme that converts binary or text data into a printable ASCII character set (`A–Z`, `a–z`, `0–9`, `+`, `/`, with `=` for padding).
 
-### Step 2: {what this step achieves}
-{Reasoning first, then the minimum command or code.}
+When I ran the `head` command for the `data.txt` file, I noticed that the end of the encoded string ends with `=`. This shows that it is Base64 encoded and you can use the `base64` command to decode it to find the password for `bandit11`.
 
-```{language}
-# solve script: minimal, commented, no hardcoded secrets
-{code}
+```bash
+# Decode it using `base64`
+bandit10@bandit:~$ base64 -d data.txt
+The password is {Password for bandit11}
 ```
 
 ![{Describe what the screenshot shows}](img/{file}.png)
 
 ## Flag
-`CTF7{...}`  {or: "Omitted at the organizer's request."}
+`The password is {Password for bandit11}`
 
 ## Lessons learned
-- {What you'd check first next time}
-- {Tool or technique you learned}
-- {What made the challenge click}
+- Check the contents of the file first with `file`, `head` or `tail`.
+- Learn how to decode and encode using `Base64`.
 
 ## References
-- {Docs, papers, other writeups that helped, with links}
-- Thanks to {author} for the challenge and {teammates} for {help}.
+- [Base64](https://en.wikipedia.org/wiki/Base64)
