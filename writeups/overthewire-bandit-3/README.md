@@ -18,7 +18,7 @@
 The password for the next level is stored in a hidden file in the `inhere` directory.
 
 ## Challenge
-> Find the password for the next level is stored in a hidden file in the `inhere` directory.
+> Find the password for the next level which is stored in a hidden file in the `inhere` directory.
 
 - Files: `hidden file`
 - Service: `bandit3@bandit.labs.overthewire.org:2220` (online)
@@ -34,15 +34,6 @@ bandit3@bandit:~$ ls
 inhere
 bandit3@bandit:~$ cd inhere
 bandit3@bandit:~/inhere$ ls
-bandit3@bandit:~/inhere$ ls -a
-.  ..  ...Hiding-From-You
-bandit3@bandit:~/inhere$ ls -la
-total 12
-drwxr-xr-x 2 root    root    4096 Oct 25 13:37 .
-drwxr-xr-x 3 root    root    4096 Oct 25 13:37 ..
--rw-r----- 1 bandit4 bandit3   33 Oct 25 13:37 ...Hiding-From-You
-bandit3@bandit:~/inhere$ cat ./...Hiding-From-You
-{Password for bandit4}
 ```
 
 ## Dead ends
@@ -58,7 +49,6 @@ To look for hidden files, we need to use the `ls` command with options. There ar
 
 ```bash
 # Using ls with options
-bandit3@bandit:~/inhere$ ls
 bandit3@bandit:~/inhere$ ls -a
 .  ..  ...Hiding-From-You
 bandit3@bandit:~/inhere$ ls -la
@@ -84,4 +74,4 @@ bandit3@bandit:~/inhere$ cat ./...Hiding-From-You
 - Understand how to use Linux commands with options.
 
 ## References
-- N/A
+- [Options](https://tldp.org/LDP/abs/html/options.html)
