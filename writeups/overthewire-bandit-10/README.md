@@ -1,18 +1,18 @@
-# {Challenge name} ({Category}, {points} pts): {Event name} {year}
+# OverTheWire: Bandit Lvl 10 (Linux): Bandit (2026)
 
 | Field      | Value |
 |------------|-------|
-| Platform   | {HackTheBox / TryHackMe / OverTheWire / event organiser} |
-| Event      | {Event name and edition} |
-| Date       | {YYYY or YYYY-MM} |
-| Category   | {web / crypto / pwn / reverse / forensics / OSINT / misc} |
-| Difficulty | {Easy / Medium / Hard / Insane} |
-| Points     | {final points} ({static / dynamic}) |
-| Solves     | {number, if published} |
-| Author     | {challenge author, if credited} |
-| Solved by  | {your handle} ({team name}) |
-| Status     | {Solved during event / Upsolved after event} |
-| Tags       | {techniques, separated by commas} |
+| Platform   | OverTheWire |
+| Event      | Bandit |
+| Date       | 2026 |
+| Category   | Linux |
+| Difficulty | Easy |
+| Points     | N/A |
+| Solves     | 0 |
+| Author     | OverTheWire |
+| Solved by  | leeadrian841 |
+| Status     | Solved |
+| Tags       | Linux |
 
 ## TL;DR
 {One or two sentences: the bug class or trick, and the key insight.}

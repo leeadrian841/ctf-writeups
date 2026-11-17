@@ -26,7 +26,7 @@ The password for the next level is stored in a file called `--spaces in this fil
 ## First look
 {What you checked first and why. Paste key output as text, trimmed.}
 
-```
+```bash
 ssh bandit2@bandit.labs.overthewire.org -p 2220
 Password: {Password for bandit2}
 
