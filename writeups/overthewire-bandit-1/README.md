@@ -24,7 +24,9 @@ The password for the next level is stored in a file called `-` located in the ho
 - Service: `bandit1@bandit.labs.overthewire.org:2220` (online)
 
 ## First look
-{What you checked first and why. Paste key output as text, trimmed.}
+I checked the list of files into the current directory using the command `ls`. This is to find what are the files in the current directory and this is excluding hidden files.
+I read the `-` file normally like how I usually read any file just like this: `cat myfile.txt`.
+But it just got stuck there with no response.
 
 ```
 ssh bandit1@bandit.labs.overthewire.org -p 2220
@@ -34,8 +36,6 @@ bandit1@bandit:~$ ls
 -
 bandit1@bandit:~$ cat -
 
-bandit1@bandit:~$ cat ./-
-{Password for bandit2}
 ```
 
 ## Dead ends
@@ -47,7 +47,9 @@ If a file starts with a hyphen (for example, `-rf` or `-help`), running a comman
 So you have to prepend `./` (the current directory indicator) to the filename such as `cat ./-` to read the `-` file.
 
 ```bash
-# solve script: minimal, commented, no hardcoded secrets
+# Correct Method to read files named with operators & symbols
+bandit1@bandit:~$ cat ./-
+{Password for bandit2}
 
 # Can be used with other commands too
 touch ./-myfile
@@ -62,9 +64,9 @@ rm ./-myfile
 `Password for bandit2`
 
 ## Lessons learned
-- Checking the naming convention of files in Linux first.
-- Understanding how to read files named using operators & symbols.
-- Knowing how operators & symbols can affect the commands running in the terminal.
+- Check the naming convention of files in Linux first.
+- Understand how to read files named using operators & symbols.
+- Know how operators & symbols can affect the commands running in the terminal.
 
 ## References
 - [Google Search - Dashed Filename](https://www.google.com/search?q=dashed+filename)
