@@ -23,64 +23,150 @@ The password for the next level is stored in a file somewhere under the inhere d
 ## Challenge
 > Find the password for the next level which is stored in a file somewhere under the inhere directory and has all the properties.
 
-- Files: `file with all the properties`
+- Files: `file with all the properties` in the `inhere` directory
 - Service: `bandit5@bandit.labs.overthewire.org:2220` (online)
 
 ## First look
 I checked what are inside the `inhere` directory first and found files inside the directory.
-My main objective is to find out what are the contents in these files since the files can contain anything like secret keys, data or even malicious software.
-I will need to run a commmand to check the contents of any file.
+My main objective is to find out the file location of that file which has the specific properties.
+I will need to find a specific commmand that is able to find files matching a given set of properties.
 
 ```bash
 ssh bandit5@bandit.labs.overthewire.org -p 2220
 Password: {Password for bandit5}
 
-bandit4@bandit:$ ls
+bandit5@bandit:$ ls
 inhere
-bandit4@bandit:$ cd inhere
-bandit4@bandit:~/inhere$ ls
--file00  -file01  -file02  -file03  -file04  -file05  -file06  -file07  -file08  -file09
+bandit5@bandit:$ cd inhere
+bandit5@bandit:~/inhere$ ls
+maybehere00  maybehere03  maybehere06  maybehere09  maybehere12  maybehere15  maybehere18
+maybehere01  maybehere04  maybehere07  maybehere10  maybehere13  maybehere16  maybehere19
+maybehere02  maybehere05  maybehere08  maybehere11  maybehere14  maybehere17
+bandit5@bandit:~/inhere$ ls -R
+.:
+maybehere00  maybehere03  maybehere06  maybehere09  maybehere12  maybehere15  maybehere18
+maybehere01  maybehere04  maybehere07  maybehere10  maybehere13  maybehere16  maybehere19
+maybehere02  maybehere05  maybehere08  maybehere11  maybehere14  maybehere17
+
+./maybehere00:
+-file1  -file2  -file3  spaces file1  spaces file2  spaces file3
+
+./maybehere01:
+-file1  -file2  -file3  spaces file1  spaces file2  spaces file3
+
+./maybehere02:
+-file1  -file2  -file3  spaces file1  spaces file2  spaces file3
+
+./maybehere03:
+-file1  -file2  -file3  spaces file1  spaces file2  spaces file3
+
+./maybehere04:
+-file1  -file2  -file3  spaces file1  spaces file2  spaces file3
+
+./maybehere05:
+-file1  -file2  -file3  spaces file1  spaces file2  spaces file3
+
+./maybehere06:
+-file1  -file2  -file3  spaces file1  spaces file2  spaces file3
+
+./maybehere07:
+-file1  -file2  -file3  spaces file1  spaces file2  spaces file3
+
+./maybehere08:
+-file1  -file2  -file3  spaces file1  spaces file2  spaces file3
+
+./maybehere09:
+-file1  -file2  -file3  spaces file1  spaces file2  spaces file3
+
+./maybehere10:
+-file1  -file2  -file3  spaces file1  spaces file2  spaces file3
+
+./maybehere11:
+-file1  -file2  -file3  spaces file1  spaces file2  spaces file3
+
+./maybehere12:
+-file1  -file2  -file3  spaces file1  spaces file2  spaces file3
+
+./maybehere13:
+-file1  -file2  -file3  spaces file1  spaces file2  spaces file3
+
+./maybehere14:
+-file1  -file2  -file3  spaces file1  spaces file2  spaces file3
+
+./maybehere15:
+-file1  -file2  -file3  spaces file1  spaces file2  spaces file3
+
+./maybehere16:
+-file1  -file2  -file3  spaces file1  spaces file2  spaces file3
+
+./maybehere17:
+-file1  -file2  -file3  spaces file1  spaces file2  spaces file3
+
+./maybehere18:
+-file1  -file2  -file3  spaces file1  spaces file2  spaces file3
+
+./maybehere19:
+-file1  -file2  -file3  spaces file1  spaces file2  spaces file3
 ```
 
 ## Dead ends
-- Run `file` to find out the contents of each file: Had to `file` each file to find out the contents inside -> Time-consuming to `file` each file
+- Run `cd` to every directory in `inhere` and check all files in each directory: Spent quite some time to check each directory but gave up instead -> Time-consuming to check all the contents in each directory
 
 ## Solution
-### Use `file` command with `*` wildcard
-In a Linux shell, the `*` (asterisk) wildcard matches zero or more of any characters in a filename or directory path. When you run a command containing `*`, the shell automatically expands it into a list of all matching filenames before executing the command (a process called globbing).
+### Use `find` to find any file with specific properties
+I had to consider a more productive method to find that file with the specific properties so I have to use the `find` command instead. I just need to find the file that have these 3 properties:
+- human-readable
+- 1033 bytes in size
+- not executable
 
-#### Common Examples
-- __Match all files:__ Running `ls *` lists every non-hidden file and folder in your current directory
-- __Match by extension:__ Running `rm *.log` deletes all files ending in `.log`, such as `app.log` and `error.log`.
-- __Match by prefix:__ Running `mv report* archive/` moves any file starting with report, including `report`, `report.pdf`, and `report_final.docx`.
-- __Match characters in the middle:__ Running `cat data_*_2026.csv` displays the contents of files like `data_sales_2026.csv` and `data_hr_2026.csv`.
-- __Match across subdirectories:__ Running `ls /var/log/*/*.log` finds `.log files` located one folder deep inside `/var/log/`.
+The `find` command is the ideal method for this scenario.
+
+### 💡 How It Works
+- **`find inhere`**: Starts the search specifically inside the directory named `inhere` (instead of searching the entire server using `find /`).
+- **`-type f`**: Restricts the search to regular **files** only, ignoring folders/directories.
+- **`-size 1033c`**: Looks for a file that is exactly **1033 bytes** in size (the `c` stands for bytes).
+- **`!`**: This is a **negation** operator. It means "NOT" or the opposite of whatever condition follows it.
+- **`-perm /a+x`**: Checks for execution permissions (`+x`) for anyone/all users (`a`).
+    - Combined with the `!`, `! -perm /a+x` means the file must **NOT be executable** by anyone.
 
 ```bash
-# Using the `file` with `*` wildcard
-bandit4@bandit:~/inhere$ file ./*
-./-file00: data
-./-file01: data
-./-file02: OpenPGP Secret Key
-./-file03: data
-./-file04: data
-./-file05: data
-./-file06: Non-ISO extended-ASCII text, with NEL line terminators
-./-file07: ASCII text
-./-file08: data
-./-file09: data
-bandit4@bandit:~/inhere$ cat ./-file07
-{Password for bandit5}
+bandit5@bandit:~/inhere$ find -type f -size 1033c ! -perm /a+x
+./maybehere07/.file2
+bandit5@bandit:~/inhere$ file ./maybehere07/.file2
+./maybehere07/.file2: ASCII text, with very long lines (1000)
+bandit5@bandit:~/inhere$ head ./maybehere07/.file2
+{Password for bandit6}
+bandit5@bandit:~/inhere$ cat ./maybehere07/.file2
+{Password for bandit6}
+```
+
+### Winning Command
+I was thinking of whether there is a better way to find the file and output the contents in just one command. There is a way to get the file and read the contents in just 1 command using `cat $({find the file})`.
+
+Either `head` or `cat` works here but you never know what are the contents inside that unknown file so it is best to use `head` as a precaution.
+
+```bash
+# Find the file in "inhere" as the current directory with the mentioned parameters
+bandit5@bandit:~/inhere$ head $(find -type f -size 1033c ! -perm /a+x)
+{Password for bandit6}
+bandit5@bandit:~/inhere$ cat $(find -type f -size 1033c ! -perm /a+x)
+{Password for bandit6}
+
+# Find the file in "inhere" directory with the mentioned parameters
+bandit5@bandit:$ head $(find inhere -type f -size 1033c ! -perm /a+x)
+{Password for bandit6}
+bandit5@bandit:$ cat $(find inhere -type f -size 1033c ! -perm /a+x)
+{Password for bandit6}
 ```
 
 ![{Describe what the screenshot shows}](img/{file}.png)
 
 ## Flag
-`Password for bandit5`
+`Password for bandit6`
 
 ## Lessons learned
-- Understand how to use Linux commands with `*` wildcard.
+- Understand how to use `find` command to find files with specific properties.
 
 ## References
-- [Wildcards](https://tldp.org/LDP/GNU-Linux-Tools-Summary/html/x11655.htm)
-- [Examples of wildcard characters](https://support.microsoft.com/en-us/access/examples-of-wildcard-characters)
+- [10 ways to use the Linux find command](https://www.redhat.com/en/blog/linux-find-command)
+- [find](https://man7.org/linux/man-pages/man1/find.1.html)

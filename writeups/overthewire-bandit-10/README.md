@@ -48,7 +48,7 @@ Base64 is a reversible binary-to-text encoding scheme that converts binary or te
 When I ran the `head` command for the `data.txt` file, I noticed that the end of the encoded string ends with `=`. This shows that it is Base64 encoded and you can use the `base64` command to decode it to find the password for `bandit11`.
 
 ```bash
-# Decode it using `base64`
+# Decode it using base64
 bandit10@bandit:~$ base64 -d data.txt
 The password is {Password for bandit11}
 ```
