@@ -24,7 +24,7 @@ The password for the next level is stored in the file `data.txt` in one of the f
 - Service: `bandit9@bandit.labs.overthewire.org:2220` (online)
 
 ## First look
-
+After I had ran `file` for the `data.txt` file, I realized that it doesn't contain `ASCII text` but `data` instead. `Data` can contain almost anything, ranging from random bytes and compiled machine code to mixed text and raw binary.
 
 ```bash
 ssh bandit9@bandit.labs.overthewire.org -p 2220
@@ -80,9 +80,14 @@ _��t�i�ƻ��7����g�U)�~�:R��D�+R�#�ڰ`4�&�
 ### Step 2: {what this step achieves}
 {Reasoning first, then the minimum command or code.}
 
-```{language}
+```bash
 # solve script: minimal, commented, no hardcoded secrets
-{code}
+bandit9@bandit:~$ cat data.txt | strings -e s | grep ==
+========== the
+[==p+
+========== password
+Y========== is
+========== {Password for bandit10}
 ```
 
 ![{Describe what the screenshot shows}](img/{file}.png)
