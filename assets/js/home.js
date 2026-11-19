@@ -21,13 +21,15 @@
 
   // ---------- State ----------
 
+  // numeric: true sorts "Lvl 2" before "Lvl 10".
+  const byTitle = (a, b) => a.title.localeCompare(b.title, undefined, { numeric: true, sensitivity: "base" });
   const SORTS = {
-    newest: { label: "Newest", fn: (a, b) => (b.date || "").localeCompare(a.date || "") },
-    oldest: { label: "Oldest", fn: (a, b) => (a.date || "9999").localeCompare(b.date || "9999") },
-    title: { label: "Title A-Z", fn: (a, b) => a.title.localeCompare(b.title) },
-    category: { label: "Category", fn: (a, b) => a.cat.name.localeCompare(b.cat.name) || a.title.localeCompare(b.title) },
-    difficulty: { label: "Difficulty", fn: (a, b) => (a.diff?.rank ?? 99) - (b.diff?.rank ?? 99) || a.title.localeCompare(b.title) },
-    points: { label: "Points", fn: (a, b) => (b.points || 0) - (a.points || 0) },
+    newest: { label: "Newest", fn: (a, b) => (b.date || "").localeCompare(a.date || "") || byTitle(a, b) },
+    oldest: { label: "Oldest", fn: (a, b) => (a.date || "9999").localeCompare(b.date || "9999") || byTitle(a, b) },
+    title: { label: "Title A-Z", fn: byTitle },
+    category: { label: "Category", fn: (a, b) => a.cat.name.localeCompare(b.cat.name) || byTitle(a, b) },
+    difficulty: { label: "Difficulty", fn: (a, b) => (a.diff?.rank ?? 99) - (b.diff?.rank ?? 99) || byTitle(a, b) },
+    points: { label: "Points", fn: (a, b) => (b.points || 0) - (a.points || 0) || byTitle(a, b) },
   };
 
   // Each filter group: key used in the URL, label, and how to read the value(s) from a writeup.

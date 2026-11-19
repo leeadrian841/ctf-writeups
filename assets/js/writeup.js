@@ -213,7 +213,10 @@
 
   // ---------- Previous / next ----------
 
-  const ordered = [...data.writeups].sort((a, b) => (b.date || "").localeCompare(a.date || ""));
+  // Same order as "Newest" on the home page, so Newer / Older step through levels in order.
+  const ordered = [...data.writeups].sort(
+    (a, b) => (b.date || "").localeCompare(a.date || "") || a.title.localeCompare(b.title, undefined, { numeric: true, sensitivity: "base" })
+  );
   const i = ordered.indexOf(w);
   const link = (x, cls, label) =>
     `<div class="col ${cls}">${x ? `<a class="d-block h-100 p-3 text-decoration-none" href="${x.url}"><small class="d-block mb-1">${label}</small>${esc(x.title)}</a>` : ""}</div>`;
