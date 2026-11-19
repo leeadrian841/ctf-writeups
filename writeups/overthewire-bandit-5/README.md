@@ -19,9 +19,9 @@ Searching by file properties: `find -type f -size 1033c ! -perm /a+x` filters by
 
 ## Challenge
 > The password for the next level is stored in a file somewhere under the inhere directory and has all of the following properties:
-- human-readable
-- 1033 bytes in size
-- not executable
+> - human-readable
+> - 1033 bytes in size
+> - not executable
 
 - Files: `file with all the properties` in the `inhere` directory
 - Service: `bandit5@bandit.labs.overthewire.org:2220` (online)
