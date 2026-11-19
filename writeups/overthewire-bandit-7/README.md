@@ -15,10 +15,10 @@
 | Tags       | Linux |
 
 ## TL;DR
-The password for the next level is stored in the file `data.txt` next to the word `millionth`.
+Searching a large file for a keyword: `data.txt` has nearly 100,000 lines, so `grep millionth data.txt` pulls out the one line that holds the password instead of scrolling through `cat`.
 
 ## Challenge
-> Find the password for the next level which is stored in the file `data.txt` next to the word `millionth`.
+> The password for the next level is stored in the file `data.txt` next to the word `millionth`.
 
 - Files: `data.txt`
 - Service: `bandit7@bandit.labs.overthewire.org:2220` (online)

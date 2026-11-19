@@ -48,7 +48,8 @@ const parse = (md, slug) => {
       if (/^#/.test(l) || (body.length && !l.trim())) break;
       if (l.trim()) body.push(l.trim());
     }
-    summary = clean(body.join(" ").replace(/[`*_]/g, ""));
+    // Drop backticks and **bold** / _italic_ marks, but keep * and _ inside `code` (file ./*, bandit_pass).
+    summary = clean(body.join(" ").split("`").map((s, i) => (i % 2 ? s : s.replace(/[*_]/g, ""))).join(""));
   }
 
   const points = get("points");

@@ -15,10 +15,10 @@
 | Tags       | Linux |
 
 ## TL;DR
-The password for the next level is stored in the file `data.txt` in one of the few human-readable strings, preceded by several ‘=’ characters.
+Readable text hidden in binary data: `strings` extracts the printable sequences and `grep '==='` keeps the ones preceded by several `=` signs, revealing the password.
 
 ## Challenge
-> Find the password for the next level which is stored in the file `data.txt`in one of the few human-readable strings, preceded by several ‘=’ characters.
+> The password for the next level is stored in the file `data.txt` in one of the few human-readable strings, preceded by several ‘=’ characters.
 
 - Files: `data.txt` (Base64 encoded)
 - Service: `bandit9@bandit.labs.overthewire.org:2220` (online)

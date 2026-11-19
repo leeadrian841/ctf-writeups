@@ -15,10 +15,12 @@
 | Tags       | Cryptography |
 
 ## TL;DR
-The password is encoded in a string using Base64.
+Base64 is encoding, not encryption: the `=` padding and limited alphabet identify the string, and decoding it (`base64 -d` on Linux or `[Convert]::FromBase64String` in PowerShell) gives the password directly.
 
 ## Challenge
-> Decode the string using Base64 and use the password to log in to krypton.labs.overthewire.org with username krypton1 using SSH on port 2231.
+> Welcome to Krypton! The first level is easy. The following string encodes the password using Base64:
+> S1JZUFRPTklTR1JFQVQ=
+> Use this password to log in to krypton.labs.overthewire.org with username krypton1 using SSH on port 2231. You can find the files for other levels in /krypton/
 
 - String: `S1JZUFRPTklTR1JFQVQ=` (Encoded Base64)
 - Service: `krypton1@krypton.labs.overthewire.org:2231` (online)

@@ -15,13 +15,13 @@
 | Tags       | Linux |
 
 ## TL;DR
-The password for the next level is stored in a file somewhere under the inhere directory and has all of the following properties:
+Searching by file properties: `find -type f -size 1033c ! -perm /a+x` filters by type, exact size and missing execute bit, narrowing 20 nested directories down to a single file.
+
+## Challenge
+> The password for the next level is stored in a file somewhere under the inhere directory and has all of the following properties:
 - human-readable
 - 1033 bytes in size
 - not executable
-
-## Challenge
-> Find the password for the next level which is stored in a file somewhere under the inhere directory and has all the properties.
 
 - Files: `file with all the properties` in the `inhere` directory
 - Service: `bandit5@bandit.labs.overthewire.org:2220` (online)

@@ -15,10 +15,10 @@
 | Tags       | Linux |
 
 ## TL;DR
-The password for the next level is stored in the file `data.txt`, where all lowercase (a-z) and uppercase (A-Z) letters have been rotated by 13 positions.
+ROT13 substitution cipher: every letter is shifted 13 places, so `tr 'A-Za-z' 'N-ZA-Mn-za-m'` decodes it, and running the same mapping again encodes it back.
 
 ## Challenge
-> Find the password for the next level which is stored in the file `data.txt`, where all lowercase (a-z) and uppercase (A-Z) letters have been rotated by 13 positions.
+> The password for the next level is stored in the file `data.txt`, where all lowercase (a-z) and uppercase (A-Z) letters have been rotated by 13 positions.
 
 - Files: `data.txt` (ROT13)
 - Service: `bandit11@bandit.labs.overthewire.org:2220` (online)

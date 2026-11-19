@@ -15,10 +15,10 @@
 | Tags       | Linux |
 
 ## TL;DR
-The password for the next level is stored in the only human-readable file in the `inhere` directory.
+Identifying file types in bulk: `file ./*` reports every file's type at once, so the single ASCII text file stands out from the binary ones without opening each by hand.
 
 ## Challenge
-> Find the password for the next level which is stored in the only human-readable file in the `inhere` directory.
+> The password for the next level is stored in the only human-readable file in the `inhere` directory.
 
 - Files: `human-readable file`
 - Service: `bandit4@bandit.labs.overthewire.org:2220` (online)

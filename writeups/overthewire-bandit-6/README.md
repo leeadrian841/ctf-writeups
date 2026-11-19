@@ -15,13 +15,13 @@
 | Tags       | Linux |
 
 ## TL;DR
-The password for the next level is stored somewhere on the server and has all of the following properties:
+Server-wide search by ownership: `find / -user bandit7 -group bandit6 -size 33c` locates the file anywhere on the system, and `2>/dev/null` hides the flood of "Permission denied" errors.
+
+## Challenge
+> The password for the next level is stored somewhere on the server and has all of the following properties:
 - Owned by user bandit7
 - Owned by group bandit6
 - 33 bytes in size
-
-## Challenge
-> Find the password for the next level which is stored somewhere on the server and has all of the following properties.
 
 - Files: `file with all the properties` in the server
 - Service: `bandit6@bandit.labs.overthewire.org:2220` (online)

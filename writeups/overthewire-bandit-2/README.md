@@ -15,10 +15,10 @@
 | Tags       | Linux |
 
 ## TL;DR
-The password for the next level is stored in a file called `--spaces in this filename--` located in the home directory.
+Filename with spaces and leading dashes: the shell splits unquoted spaces into separate arguments. Quoting the whole path (`cat "./--spaces in this filename--"`) passes it as one filename.
 
 ## Challenge
-> Find the password for the next level is stored in a file called `--spaces in this filename--` located in the home directory
+> The password for the next level is stored in a file called `--spaces in this filename--` located in the home directory.
 
 - Files: `--spaces in this filename--`
 - Service: `bandit2@bandit.labs.overthewire.org:2220` (online)

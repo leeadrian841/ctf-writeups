@@ -15,10 +15,10 @@
 | Tags       | Linux |
 
 ## TL;DR
-The password for the next level is stored in the file `data.txt` and is the only line of text that occurs only once.
+Finding the line that occurs only once: `uniq -u` only compares neighbouring lines, so the file must be sorted first (`sort data.txt | uniq -u`).
 
 ## Challenge
-> Find the password for the next level which is stored in a file `data.txt` and is the only line of text that occurs only once.
+> The password for the next level is stored in the file `data.txt` and is the only line of text that occurs only once.
 
 - Files: `data.txt`
 - Service: `bandit8@bandit.labs.overthewire.org:2220` (online)

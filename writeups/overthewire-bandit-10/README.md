@@ -15,10 +15,10 @@
 | Tags       | Linux |
 
 ## TL;DR
-The password for the next level is stored in the file `data.txt`, which contains Base64 encoded data.
+Base64 encoding: the trailing `=` padding gives it away, and `base64 -d data.txt` decodes it. Encoding is reversible by anyone and gives no secrecy.
 
 ## Challenge
-> Find the password for the next level which is stored in the file `data.txt`, which contains Base64 encoded data.
+> The password for the next level is stored in the file `data.txt`, which contains Base64 encoded data.
 
 - Files: `data.txt` (Base64 encoded)
 - Service: `bandit10@bandit.labs.overthewire.org:2220` (online)

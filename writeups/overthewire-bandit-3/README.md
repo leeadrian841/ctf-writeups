@@ -15,10 +15,10 @@
 | Tags       | Linux |
 
 ## TL;DR
-The password for the next level is stored in a hidden file in the `inhere` directory.
+Hidden file: names that start with a dot are skipped by a plain `ls`, so the directory looks empty. `ls -a` (or `ls -A`) reveals `...Hiding-From-You`.
 
 ## Challenge
-> Find the password for the next level which is stored in a hidden file in the `inhere` directory.
+> The password for the next level is stored in a hidden file in the `inhere` directory.
 
 - Files: `hidden file`
 - Service: `bandit3@bandit.labs.overthewire.org:2220` (online)

@@ -15,10 +15,10 @@
 | Tags       | Linux |
 
 ## TL;DR
-The password for the next level is stored in a file called `-` located in the home directory.
+Dash-named file: `cat -` treats `-` as standard input, so the command just waits for typing. Prefixing the name with `./` makes the shell pass it as a file path instead of an option.
 
 ## Challenge
-> Find the password for the next level is stored in a file called `-` located in the home directory
+> The password for the next level is stored in a file called `-` located in the home directory.
 
 - Files: `-`
 - Service: `bandit1@bandit.labs.overthewire.org:2220` (online)
