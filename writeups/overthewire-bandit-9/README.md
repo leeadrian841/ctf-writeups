@@ -26,6 +26,17 @@ The password for the next level is stored in the file `data.txt` in one of the f
 ## First look
 After I had ran `file` for the `data.txt` file, I realized that it doesn't contain `ASCII text` but `data` instead. `Data` can contain almost anything, ranging from random bytes and compiled machine code to mixed text and raw binary.
 
+
+
+### Output for `file`
+| Output | Human-readable? | What it means |
+|--------|-----------------|---------------|
+| ASCII text | Yes | Basic English characters, numbers, and symbols only. |
+| UTF-8 Unicode text | Yes | Modern text supporting international scripts and emojis. |
+| UTF-16 Unicode text | Yes | 2-byte per character encoding, often originating from Windows. |
+| ISO-8859 text | Yes | Legacy 8-bit regional character encoding (e.g., Western European). |
+| data | No | Unrecognized raw binary bytes; not safe to edit as plain text. |
+
 ```bash
 ssh bandit9@bandit.labs.overthewire.org -p 2220
 Password: {Password for bandit9}
@@ -89,8 +100,6 @@ bandit9@bandit:~$ cat data.txt | strings -e s | grep ==
 Y========== is
 ========== {Password for bandit10}
 ```
-
-![{Describe what the screenshot shows}](img/{file}.png)
 
 ## Flag
 `Password for bandit10`
