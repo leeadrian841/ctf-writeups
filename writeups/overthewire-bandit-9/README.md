@@ -26,7 +26,7 @@ The password for the next level is stored in the file `data.txt` in one of the f
 ## First look
 After I had ran `file` for the `data.txt` file, I realized that it doesn't contain `ASCII text` but `data` instead. `Data` can contain almost anything, ranging from random bytes and compiled machine code to mixed text and raw binary.
 
-
+I ran `head` to confirm my assumptions and saw that the weird output contained symbols.
 
 ### Output for `file`
 | Output | Human-readable? | What it means |
@@ -81,33 +81,76 @@ _��t�i�ƻ��7����g�U)�~�:R��D�+R�#�ڰ`4�&�
 ```
 
 ## Dead ends
-- {Idea}: {what happened} -> {why it didn't work}
-- {Idea}: {what happened} -> {why it didn't work}
+- `cat data.txt`: terminal filled with garbage characters -> the file is binary, so most bytes are not printable text.
+- `grep "==" data.txt`: returned only `binary file matches` -> grep detected binary content and suppressed the output.
+- `grep -a "==" data.txt`: printed the match buried in junk bytes -> `-a` forces text mode but keeps the noise; workable, not clean.
+- Trusting the `.txt` extension: assumed plain text -> `file data.txt` returned `data`; Linux ignores extensions and `file` found no known signature.
+- `wc -l data.txt` = 71: assumed 71 readable lines -> `wc -l` counts `0x0A` bytes, which appear randomly in binary data.
+- `strings data.txt | grep "="`: too many results to scan -> a single `=` is common in random strings; `==` or `===` cuts the noise.
+- `sort data.txt | uniq -u` (Level 8 method): no useful output -> wrong clue; Level 9 is about readable strings, not unique lines.
 
 ## Solution
-### Step 1: {what this step achieves}
-{Why you took this step, what you expected, what you saw.}
-
-### Step 2: {what this step achieves}
-{Reasoning first, then the minimum command or code.}
+### Step 1: Use `strings` to get human-readable text
+The `data.txt` file contained data so this can be almost anything, ranging from random bytes and compiled machine code to mixed text and raw binary. I had to use `strings data.txt | head` to partially output the human-readable text. You wouldn't want to see the entire `strings` output which is quite long actually.
 
 ```bash
-# solve script: minimal, commented, no hardcoded secrets
+bandit9@bandit:~$ strings data.txt | head
+Z.|H
+*IsU
+_WnZ
+tv3$Y
+y`Y@
+fk:@
+aAb{
+#|bsG
+OWCb
+'}.0
+```
+
+### Step 2: Chaining `strings` with `grep` to get the favourable lines
+For my 1st attempt, I used `cat data.txt | strings -e s | grep ==` to get the lines that I needed to output. After understanding how it worked, I considered to make the command cleaner.
+
+As for the next few attempts, I understood how `strings` and `grep` can work together to produce a cleaner output. I produced a cleaner output by chaining both `strings` and `grep` into 1 command `strings data.txt | grep '==='`. This command pulled out all the human-readable text and then filtered those lines that had `===`.
+
+```bash
+# My 1st attempt
 bandit9@bandit:~$ cat data.txt | strings -e s | grep ==
 ========== the
 [==p+
 ========== password
 Y========== is
 ========== {Password for bandit10}
+
+# Alernative without strings
+bandit9@bandit:~$ grep -a '===' data.txt
+��Ѯ�qAi3ヅ��C(z?U����7j���H���yu�ۋ��)G�@�XN����HKp:D'P��G+R�:�p���`=Sc�␦<�7�}7;========== the
+�ł�PJ�@ j,~��%1o-��U��P#rB�ffv�X(Mt�����&+E     ��X�=��+��IӄDO�-���=� M�g ���϶��n���s�f�y�=�H�f�#ڪ�O���rN��=����1d^]6-�VY���o�YcN��CC�J.��.{J�������========== password
+�Y݀��qR��� o��<`J������8ۻ�.��Oj(%qy=׎���>�)PcYa���޴����,g�
+                                                         �
+                                                          z     /rG%�T!j5㎓5�v�� ��5@�H������========== is
+u�w�C�ɺ�`.KdIX�Q%�-�-g�========== {Password for bandit10}
+
+# Cleaner version
+bandit9@bandit:~$ strings data.txt | grep '==='
+}7;========== the
+========== password
+========== is
+========== {Password for bandit10}
+```
+
+### Useful follow-ups
+```bash
+wc -c data.txt          # size in bytes
+xxd data.txt | head     # hex view of the first bytes
+strings data.txt | wc -l   # how many readable strings exist
 ```
 
 ## Flag
 `Password for bandit10`
 
 ## Lessons learned
-- {What you'd check first next time}
-- {Tool or technique you learned}
-- {What made the challenge click}
+- Learn how to chain commands to get cleaner output.
+- Learn how to handle different contents for files.
 
 ## References
 - [Piping and Redirection](https://ryanstutorials.net/linuxtutorial/piping.php)
