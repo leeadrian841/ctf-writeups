@@ -77,8 +77,6 @@ bandit11@bandit:~$ cat data.txt | tr 'A-Za-z' 'N-ZA-Mn-za-m'
 The password is {Password for bandit12}
 ```
 
-![{Describe what the screenshot shows}](img/{file}.png)
-
 ## Flag
 `The password is {Password for bandit12}`
 
