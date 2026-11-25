@@ -43,7 +43,7 @@ This repo is also a website on GitHub Pages. The home page shows every writeup a
 
 **Add a writeup**
 
-Copy [ctf-writeup-template.md](ctf-writeup-template.md) to `writeups/<folder-name>/README.md`, fill it in and push. That is the only step: the site reads everything from the README. Images go in `writeups/<folder-name>/img/`.
+Copy [ctf-writeup-template.md](ctf-writeup-template.md) to `writeups/<folder-name>/README.md`, fill it in and push. In VS Code, `Ctrl+Shift+P` > **Tasks: Run Task** > **New writeup** does the copy for you: type the folder name and the new README opens. Without VS Code, run `node tools/new-writeup.js <folder-name>`. That is the only step: the site reads everything from the README. Images go in `writeups/<folder-name>/img/`.
 
 | Shown on the site | Comes from |
 |-------------------|------------|

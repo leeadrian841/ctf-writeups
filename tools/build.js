@@ -7,7 +7,7 @@ const { scan } = require("./scan");
 
 const root = path.resolve(__dirname, "..");
 const out = path.join(root, "_site");
-const skip = new Set([".git", ".github", "_site", "tools", "node_modules", ".claude"]);
+const skip = new Set([".git", ".github", "_site", "tools", "node_modules", ".claude", ".vscode"]);
 const reserved = new Set(["index", "writeup", "assets", "data", "writeups", "404"]);
 
 const NAME_OK = new RegExp("^[a-z0-9][a-z0-9-]*$");

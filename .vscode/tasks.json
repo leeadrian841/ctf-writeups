@@ -1,0 +1,21 @@
+{
+  // Ctrl+Shift+P > "Tasks: Run Task" > "New writeup", then type the folder name.
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "New writeup",
+      "type": "process",
+      "command": "node",
+      "args": ["${workspaceFolder}/tools/new-writeup.js", "${input:folderName}"],
+      "presentation": { "reveal": "silent", "revealProblems": "never", "panel": "shared", "clear": true },
+      "problemMatcher": []
+    }
+  ],
+  "inputs": [
+    {
+      "id": "folderName",
+      "type": "promptString",
+      "description": "Folder name for the new writeup (becomes the URL), e.g. overthewire-bandit-17"
+    }
+  ]
+}
