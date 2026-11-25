@@ -128,8 +128,8 @@
     }
     // # comment
     if (/^\s*#/.test(line)) return span("t-comment", line);
-    // $ command, PS C:\> command
-    if ((m = line.match(/^(\$|>|PS [^>]*>)(\s+)(.*)$/))) return span("t-sym", m[1]) + m[2] + command(m[3]);
+    // $ command, ❯ command (Starship / Oh My Posh prompt), PS C:\> command
+    if ((m = line.match(/^(\$|>|❯|PS [^>]*>)(\s+)(.*)$/))) return span("t-sym", m[1]) + m[2] + command(m[3]);
     // A line that starts with a well-known command and has no prompt
     if ((m = line.match(/^(sudo\s+)?([\w.-]+)(\s|$)/)) && COMMANDS.has(m[2])) return command(line);
     // Label: value
